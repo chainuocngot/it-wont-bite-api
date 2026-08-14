@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TodoStatus {
+  Todo
+  InProgress
+  Completed
+  Cancelled
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  pwd           String
+  name          String
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  todos         Todo[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model Todo {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @map("user_id")
+  title     String
+  status    TodoStatus
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: Cascade)
+
+  @@index([userId])
+  @@map("todos")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String
+  userId    Int      @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
