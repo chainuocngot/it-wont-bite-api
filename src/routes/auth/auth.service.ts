@@ -1,6 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { EmailAlreadyInUsedException } from 'src/routes/auth/auth.error';
-import { RegisterBodyType, RegisterResType } from 'src/routes/auth/auth.model';
+import {
+  EmailAlreadyInUsedException,
+  UserNotFoundException,
+  WrongPasswordException,
+} from 'src/routes/auth/auth.error';
+import {
+  LoginBodyType,
+  LoginResType,
+  RegisterBodyType,
+  RegisterResType,
+} from 'src/routes/auth/auth.model';
+import { UserType } from 'src/shared/models/user.model';
 import { RefreshTokenRepository } from 'src/shared/repositories/refresh-token.repository';
 import { UserRepository } from 'src/shared/repositories/user.repository';
 import { HashingService } from 'src/shared/services/hashing.service';
@@ -39,12 +49,48 @@ export class AuthService {
       },
     });
 
+    const { accessToken, refreshToken } = await this._createAuthSession(user.id);
+
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+  }
+
+  async login(body: LoginBodyType): Promise<LoginResType> {
+    const user = await this.userRepository.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (user === null) {
+      throw UserNotFoundException;
+    }
+
+    const isMatchPwd = await this.hashingService.compare(body.pwd, user.pwd);
+    if (!isMatchPwd) {
+      throw WrongPasswordException;
+    }
+
+    const { accessToken, refreshToken } = await this._createAuthSession(user.id);
+
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+  }
+
+  private async _createAuthSession(userId: UserType['id']): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
     // Sign tokens
     const $signAT = this.tokenService.signAccessToken({
-      userId: user.id,
+      userId,
     });
     const $signRT = this.tokenService.signRefreshToken({
-      userId: user.id,
+      userId,
     });
     const [accessToken, refreshToken] = await Promise.all([$signAT, $signRT]);
 
@@ -53,14 +99,14 @@ export class AuthService {
     await this.refreshTokenRepository.create({
       data: {
         token: refreshToken,
-        userId: user.id,
+        userId,
         expiresAt: new Date(refreshTokenPayload.exp * 1000),
       },
     });
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      accessToken,
+      refreshToken,
     };
   }
 }

@@ -19,5 +19,18 @@ export const RegisterResSchema = z.object({
   refresh_token: z.jwt(),
 });
 
+// Login
+export const LoginBodySchema = UserSchema.pick({
+  email: true,
+  pwd: true,
+}).strict();
+
+export const LoginResSchema = z.object({
+  access_token: z.jwt(),
+  refresh_token: z.jwt(),
+});
+
 export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
 export type RegisterResType = z.infer<typeof RegisterResSchema>;
+export type LoginBodyType = z.infer<typeof LoginBodySchema>;
+export type LoginResType = z.infer<typeof LoginResSchema>;
