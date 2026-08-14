@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTodoBodyType, CreateTodoResType } from 'src/routes/todo/todo.model';
+import { CreateTodoBodyType, CreateTodoResType, ListTodoResType } from 'src/routes/todo/todo.model';
 import { UserType } from 'src/shared/models/user.model';
 import { TodoRepository } from 'src/shared/repositories/todo.repository';
 
@@ -12,6 +12,14 @@ export class TodoService {
       data: {
         status: body.status,
         title: body.title,
+        userId,
+      },
+    });
+  }
+
+  listTodo(userId: UserType['id']): Promise<ListTodoResType> {
+    return this.todoRepository.findMany({
+      where: {
         userId,
       },
     });

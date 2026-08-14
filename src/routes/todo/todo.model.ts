@@ -13,5 +13,9 @@ export const CreateTodoBodySchema = TodoSchema.pick({
 
 export const CreateTodoResSchema = TodoSchema;
 
+// List Todo
+export const ListTodoResSchema = z.array(TodoSchema);
+
 export type CreateTodoBodyType = z.infer<typeof CreateTodoBodySchema>;
 export type CreateTodoResType = z.infer<typeof CreateTodoResSchema>;
+export type ListTodoResType = z.infer<typeof ListTodoResSchema>;

@@ -52,8 +52,8 @@ export class AuthService {
     const { accessToken, refreshToken } = await this._createAuthSession(user.id);
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      accessToken,
+      refreshToken,
     };
   }
 
@@ -76,8 +76,8 @@ export class AuthService {
     const { accessToken, refreshToken } = await this._createAuthSession(user.id);
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      accessToken,
+      refreshToken,
     };
   }
 

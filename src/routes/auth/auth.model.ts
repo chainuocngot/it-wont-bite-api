@@ -15,8 +15,8 @@ export const RegisterBodySchema = UserSchema.pick({
   .strict();
 
 export const RegisterResSchema = z.object({
-  access_token: z.jwt(),
-  refresh_token: z.jwt(),
+  accessToken: z.jwt(),
+  refreshToken: z.jwt(),
 });
 
 // Login
@@ -26,8 +26,8 @@ export const LoginBodySchema = UserSchema.pick({
 }).strict();
 
 export const LoginResSchema = z.object({
-  access_token: z.jwt(),
-  refresh_token: z.jwt(),
+  accessToken: z.jwt(),
+  refreshToken: z.jwt(),
 });
 
 export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;

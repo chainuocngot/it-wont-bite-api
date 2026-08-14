@@ -1,7 +1,7 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodSerializerDto } from 'nestjs-zod';
-import { CreateTodoBodyDto, CreateTodoResDto } from 'src/routes/todo/todo.dto';
+import { CreateTodoBodyDto, CreateTodoResDto, ListTodoResDto } from 'src/routes/todo/todo.dto';
 import { TodoService } from 'src/routes/todo/todo.service';
 import { ActiveUser } from 'src/shared/decorators/active-user.decorator';
 import { UserType } from 'src/shared/models/user.model';
@@ -16,5 +16,12 @@ export class TodoController {
   @ZodSerializerDto(CreateTodoResDto)
   createTodo(@ActiveUser('userId') userId: UserType['id'], @Body() body: CreateTodoBodyDto) {
     return this.todoService.createTodo(userId, body);
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @ZodSerializerDto(ListTodoResDto)
+  listTodo(@ActiveUser('userId') userId: UserType['id']) {
+    return this.todoService.listTodo(userId);
   }
 }
