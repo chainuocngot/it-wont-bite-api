@@ -29,9 +29,13 @@ export const GetTodoIdParamSchema = z.object({
   todoId: z.coerce.number(),
 });
 
+// Get Todo Detail
+export const GetTodoDetailResSchema = TodoSchema;
+
 export type CreateTodoBodyType = z.infer<typeof CreateTodoBodySchema>;
 export type CreateTodoResType = z.infer<typeof CreateTodoResSchema>;
 export type ListTodoResType = z.infer<typeof ListTodoResSchema>;
 export type UpdateTodoBodyType = z.infer<typeof UpdateTodoBodySchema>;
 export type UpdateTodoResType = z.infer<typeof UpdateTodoResSchema>;
 export type GetTodoIdParamType = z.infer<typeof GetTodoIdParamSchema>;
+export type GetTodoDetailResType = z.infer<typeof GetTodoDetailResSchema>;

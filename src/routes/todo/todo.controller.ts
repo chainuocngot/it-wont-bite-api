@@ -1,6 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodSerializerDto } from 'nestjs-zod';
+import { GetTodoDetailResDto } from 'src/routes/auth/auth.dto';
 import {
   CreateTodoBodyDto,
   CreateTodoResDto,
@@ -44,6 +45,16 @@ export class TodoController {
       userId,
       todoId: param.todoId,
       body,
+    });
+  }
+
+  @Get(':todoId')
+  @HttpCode(HttpStatus.OK)
+  @ZodSerializerDto(GetTodoDetailResDto)
+  getTodoDetail(@ActiveUser('userId') userId: UserType['id'], @Param() param: GetTodoIdParamDto) {
+    return this.todoService.getTodoDetail({
+      userId,
+      todoId: param.todoId,
     });
   }
 }

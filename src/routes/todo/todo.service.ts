@@ -3,6 +3,7 @@ import { TodoNotFoundException } from 'src/routes/todo/todo.error';
 import {
   CreateTodoBodyType,
   CreateTodoResType,
+  GetTodoDetailResType,
   ListTodoResType,
   UpdateTodoBodyType,
   UpdateTodoResType,
@@ -61,5 +62,26 @@ export class TodoService {
 
       throw error;
     }
+  }
+
+  async getTodoDetail({
+    userId,
+    todoId,
+  }: {
+    userId: UserType['id'];
+    todoId: TodoType['id'];
+  }): Promise<GetTodoDetailResType> {
+    const todo = await this.todoRepository.findUnique({
+      where: {
+        id: todoId,
+        userId,
+      },
+    });
+
+    if (todo === null) {
+      throw TodoNotFoundException;
+    }
+
+    return todo;
   }
 }
