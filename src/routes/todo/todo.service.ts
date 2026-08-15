@@ -1,7 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTodoBodyType, CreateTodoResType, ListTodoResType } from 'src/routes/todo/todo.model';
+import { TodoNotFoundException } from 'src/routes/todo/todo.error';
+import {
+  CreateTodoBodyType,
+  CreateTodoResType,
+  ListTodoResType,
+  UpdateTodoBodyType,
+  UpdateTodoResType,
+} from 'src/routes/todo/todo.model';
+import { TodoType } from 'src/shared/models/todo.model';
 import { UserType } from 'src/shared/models/user.model';
 import { TodoRepository } from 'src/shared/repositories/todo.repository';
+import { isNotFoundPrismaError } from 'src/shared/utils/prisma.util';
 
 @Injectable()
 export class TodoService {
@@ -23,5 +32,34 @@ export class TodoService {
         userId,
       },
     });
+  }
+
+  async updateTodo({
+    userId,
+    todoId,
+    body,
+  }: {
+    userId: UserType['id'];
+    todoId: TodoType['id'];
+    body: UpdateTodoBodyType;
+  }): Promise<UpdateTodoResType> {
+    try {
+      return await this.todoRepository.update({
+        where: {
+          id: todoId,
+          userId,
+        },
+        data: {
+          title: body.title,
+          status: body.status,
+        },
+      });
+    } catch (error) {
+      if (isNotFoundPrismaError(error)) {
+        throw TodoNotFoundException;
+      }
+
+      throw error;
+    }
   }
 }
