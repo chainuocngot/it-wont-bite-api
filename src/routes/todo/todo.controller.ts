@@ -1,7 +1,17 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodSerializerDto } from 'nestjs-zod';
-import { GetTodoDetailResDto } from 'src/routes/auth/auth.dto';
+import { DeleteTodoResDto, GetTodoDetailResDto } from 'src/routes/auth/auth.dto';
 import {
   CreateTodoBodyDto,
   CreateTodoResDto,
@@ -53,6 +63,16 @@ export class TodoController {
   @ZodSerializerDto(GetTodoDetailResDto)
   getTodoDetail(@ActiveUser('userId') userId: UserType['id'], @Param() param: GetTodoIdParamDto) {
     return this.todoService.getTodoDetail({
+      userId,
+      todoId: param.todoId,
+    });
+  }
+
+  @Delete(':todoId')
+  @HttpCode(HttpStatus.OK)
+  @ZodSerializerDto(DeleteTodoResDto)
+  deleteTodo(@ActiveUser('userId') userId: UserType['id'], @Param() param: GetTodoIdParamDto) {
+    return this.todoService.deleteTodo({
       userId,
       todoId: param.todoId,
     });

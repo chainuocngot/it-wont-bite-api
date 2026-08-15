@@ -3,6 +3,7 @@ import { TodoNotFoundException } from 'src/routes/todo/todo.error';
 import {
   CreateTodoBodyType,
   CreateTodoResType,
+  DeleteTodoResType,
   GetTodoDetailResType,
   ListTodoResType,
   UpdateTodoBodyType,
@@ -83,5 +84,32 @@ export class TodoService {
     }
 
     return todo;
+  }
+
+  async deleteTodo({
+    userId,
+    todoId,
+  }: {
+    userId: UserType['id'];
+    todoId: TodoType['id'];
+  }): Promise<DeleteTodoResType> {
+    try {
+      await this.todoRepository.delete({
+        where: {
+          id: todoId,
+          userId,
+        },
+      });
+
+      return {
+        message: 'Success.DeleteTodo',
+      };
+    } catch (error) {
+      if (isNotFoundPrismaError(error)) {
+        throw TodoNotFoundException;
+      }
+
+      throw error;
+    }
   }
 }

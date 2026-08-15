@@ -5,7 +5,7 @@ import {
   RegisterBodySchema,
   RegisterResSchema,
 } from 'src/routes/auth/auth.model';
-import { GetTodoDetailResSchema } from 'src/routes/todo/todo.model';
+import { DeleteTodoResSchema, GetTodoDetailResSchema } from 'src/routes/todo/todo.model';
 
 export class RegisterBodyDto extends createZodDto(RegisterBodySchema) {}
 
@@ -16,3 +16,5 @@ export class LoginBodyDto extends createZodDto(LoginBodySchema) {}
 export class LoginResDto extends createZodDto(LoginResSchema) {}
 
 export class GetTodoDetailResDto extends createZodDto(GetTodoDetailResSchema) {}
+
+export class DeleteTodoResDto extends createZodDto(DeleteTodoResSchema) {}

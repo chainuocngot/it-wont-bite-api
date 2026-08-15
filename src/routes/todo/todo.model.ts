@@ -1,5 +1,6 @@
 import { TodoStatus } from 'src/shared/constants/todo.constant';
 import { idZod } from 'src/shared/constants/zod.constant';
+import { MessageResSchema } from 'src/shared/models/response.model';
 import { TodoSchema } from 'src/shared/models/todo.model';
 import z from 'zod';
 
@@ -32,6 +33,9 @@ export const GetTodoIdParamSchema = z.object({
 // Get Todo Detail
 export const GetTodoDetailResSchema = TodoSchema;
 
+// Delete Todo
+export const DeleteTodoResSchema = MessageResSchema;
+
 export type CreateTodoBodyType = z.infer<typeof CreateTodoBodySchema>;
 export type CreateTodoResType = z.infer<typeof CreateTodoResSchema>;
 export type ListTodoResType = z.infer<typeof ListTodoResSchema>;
@@ -39,3 +43,4 @@ export type UpdateTodoBodyType = z.infer<typeof UpdateTodoBodySchema>;
 export type UpdateTodoResType = z.infer<typeof UpdateTodoResSchema>;
 export type GetTodoIdParamType = z.infer<typeof GetTodoIdParamSchema>;
 export type GetTodoDetailResType = z.infer<typeof GetTodoDetailResSchema>;
+export type DeleteTodoResType = z.infer<typeof DeleteTodoResSchema>;
