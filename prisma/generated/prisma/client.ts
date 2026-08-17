@@ -49,6 +49,11 @@ export type User = Prisma.UserModel
  */
 export type Todo = Prisma.TodoModel
 /**
+ * Model TodoLabel
+ * 
+ */
+export type TodoLabel = Prisma.TodoLabelModel
+/**
  * Model RefreshToken
  * 
  */

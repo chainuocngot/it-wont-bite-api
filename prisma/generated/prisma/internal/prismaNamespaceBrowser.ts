@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Todo: 'Todo',
+  TodoLabel: 'TodoLabel',
   RefreshToken: 'RefreshToken'
 } as const
 
@@ -88,11 +89,25 @@ export const TodoScalarFieldEnum = {
   userId: 'userId',
   title: 'title',
   status: 'status',
+  description: 'description',
+  dueAt: 'dueAt',
+  remindAt: 'remindAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]
+
+
+export const TodoLabelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TodoLabelScalarFieldEnum = (typeof TodoLabelScalarFieldEnum)[keyof typeof TodoLabelScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
@@ -120,4 +135,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

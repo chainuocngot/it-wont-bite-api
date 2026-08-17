@@ -1,12 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "./generated/prisma"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "./generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -20,13 +18,23 @@ enum TodoStatus {
   Cancelled
 }
 
+enum TodoLabelColor {
+  Blue
+  Red
+  Yellow
+  Green
+  Purple
+  Pink
+  Orange
+}
+
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  pwd           String
-  name          String
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  pwd       String
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   todos         Todo[]
   refreshTokens RefreshToken[]
@@ -35,17 +43,30 @@ model User {
 }
 
 model Todo {
-  id        Int        @id @default(autoincrement())
-  userId    Int        @map("user_id")
-  title     String
-  status    TodoStatus
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  title       String
+  status      TodoStatus
+  description String?
+  dueAt       DateTime?  @map("due_at") @db.Date
+  remindAt    DateTime?  @map("remind_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: Cascade)
 
   @@index([userId])
   @@map("todos")
+}
+
+model TodoLabel {
+  id        Int            @id @default(autoincrement())
+  name      String?        @unique
+  color     TodoLabelColor @unique
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  @@map("todo_labels")
 }
 
 model RefreshToken {

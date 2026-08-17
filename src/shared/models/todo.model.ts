@@ -7,6 +7,9 @@ export const TodoSchema = z.object({
   userId: idZod,
   title: z.string(),
   status: z.enum(TodoStatus),
+  description: z.string().nullish(),
+  dueAt: dateTimeZod.nullish(),
+  remindAt: dateTimeZod.nullish(),
   createdAt: dateTimeZod,
   updatedAt: dateTimeZod,
 });

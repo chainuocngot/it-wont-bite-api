@@ -9,5 +9,6 @@
  */
 export type * from './models/User.js'
 export type * from './models/Todo.js'
+export type * from './models/TodoLabel.js'
 export type * from './models/RefreshToken.js'
 export type * from './commonInputTypes.js'

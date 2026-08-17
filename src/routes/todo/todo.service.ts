@@ -21,8 +21,7 @@ export class TodoService {
   createTodo(userId: UserType['id'], body: CreateTodoBodyType): Promise<CreateTodoResType> {
     return this.todoRepository.create({
       data: {
-        status: body.status,
-        title: body.title,
+        ...body,
         userId,
       },
     });
@@ -51,10 +50,7 @@ export class TodoService {
           id: todoId,
           userId,
         },
-        data: {
-          title: body.title,
-          status: body.status,
-        },
+        data: body,
       });
     } catch (error) {
       if (isNotFoundPrismaError(error)) {

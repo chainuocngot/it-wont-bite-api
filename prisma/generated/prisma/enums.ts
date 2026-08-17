@@ -16,3 +16,16 @@ export const TodoStatus = {
 } as const
 
 export type TodoStatus = (typeof TodoStatus)[keyof typeof TodoStatus]
+
+
+export const TodoLabelColor = {
+  Blue: 'Blue',
+  Red: 'Red',
+  Yellow: 'Yellow',
+  Green: 'Green',
+  Purple: 'Purple',
+  Pink: 'Pink',
+  Orange: 'Orange'
+} as const
+
+export type TodoLabelColor = (typeof TodoLabelColor)[keyof typeof TodoLabelColor]

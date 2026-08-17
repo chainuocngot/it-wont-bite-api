@@ -398,6 +398,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Todo: 'Todo',
+  TodoLabel: 'TodoLabel',
   RefreshToken: 'RefreshToken'
 } as const
 
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "todo" | "refreshToken"
+    modelProps: "user" | "todo" | "todoLabel" | "refreshToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -566,6 +567,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TodoLabel: {
+      payload: Prisma.$TodoLabelPayload<ExtArgs>
+      fields: Prisma.TodoLabelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TodoLabelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TodoLabelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        findFirst: {
+          args: Prisma.TodoLabelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TodoLabelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        findMany: {
+          args: Prisma.TodoLabelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>[]
+        }
+        create: {
+          args: Prisma.TodoLabelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        createMany: {
+          args: Prisma.TodoLabelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TodoLabelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>[]
+        }
+        delete: {
+          args: Prisma.TodoLabelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        update: {
+          args: Prisma.TodoLabelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        deleteMany: {
+          args: Prisma.TodoLabelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TodoLabelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TodoLabelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>[]
+        }
+        upsert: {
+          args: Prisma.TodoLabelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoLabelPayload>
+        }
+        aggregate: {
+          args: Prisma.TodoLabelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTodoLabel>
+        }
+        groupBy: {
+          args: Prisma.TodoLabelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TodoLabelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TodoLabelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TodoLabelCountAggregateOutputType> | number
+        }
+      }
+    }
     RefreshToken: {
       payload: Prisma.$RefreshTokenPayload<ExtArgs>
       fields: Prisma.RefreshTokenFieldRefs
@@ -696,11 +771,25 @@ export const TodoScalarFieldEnum = {
   userId: 'userId',
   title: 'title',
   status: 'status',
+  description: 'description',
+  dueAt: 'dueAt',
+  remindAt: 'remindAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]
+
+
+export const TodoLabelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TodoLabelScalarFieldEnum = (typeof TodoLabelScalarFieldEnum)[keyof typeof TodoLabelScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
@@ -728,6 +817,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -789,6 +886,20 @@ export type EnumTodoStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'TodoStatus[]'
  */
 export type ListEnumTodoStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TodoStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TodoLabelColor'
+ */
+export type EnumTodoLabelColorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TodoLabelColor'>
+    
+
+
+/**
+ * Reference to a field of type 'TodoLabelColor[]'
+ */
+export type ListEnumTodoLabelColorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TodoLabelColor[]'>
     
 
 
@@ -958,6 +1069,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   todo?: Prisma.TodoOmit
+  todoLabel?: Prisma.TodoLabelOmit
   refreshToken?: Prisma.RefreshTokenOmit
 }
 

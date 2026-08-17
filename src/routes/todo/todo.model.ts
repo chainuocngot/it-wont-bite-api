@@ -1,5 +1,4 @@
 import { TodoStatus } from 'src/shared/constants/todo.constant';
-import { idZod } from 'src/shared/constants/zod.constant';
 import { MessageResSchema } from 'src/shared/models/response.model';
 import { TodoSchema } from 'src/shared/models/todo.model';
 import z from 'zod';
@@ -7,9 +6,16 @@ import z from 'zod';
 // Create Todo
 export const CreateTodoBodySchema = TodoSchema.pick({
   title: true,
+  status: true,
+  description: true,
+  dueAt: true,
+  remindAt: true,
 })
   .extend({
     status: TodoSchema.shape.status.default(TodoStatus.Todo),
+    description: TodoSchema.shape.description.optional(),
+    dueAt: TodoSchema.shape.dueAt.optional(),
+    remindAt: TodoSchema.shape.remindAt.optional(),
   })
   .strict();
 
@@ -22,6 +28,9 @@ export const ListTodoResSchema = z.array(TodoSchema);
 export const UpdateTodoBodySchema = TodoSchema.pick({
   title: true,
   status: true,
+  description: true,
+  dueAt: true,
+  remindAt: true,
 }).strict();
 
 export const UpdateTodoResSchema = TodoSchema;
