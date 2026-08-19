@@ -227,14 +227,14 @@ export type TodoLabelOrderByWithRelationInput = {
 
 export type TodoLabelWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
+  color?: $Enums.TodoLabelColor
   AND?: Prisma.TodoLabelWhereInput | Prisma.TodoLabelWhereInput[]
   OR?: Prisma.TodoLabelWhereInput[]
   NOT?: Prisma.TodoLabelWhereInput | Prisma.TodoLabelWhereInput[]
-  name?: Prisma.StringNullableFilter<"TodoLabel"> | string | null
-  color?: Prisma.EnumTodoLabelColorFilter<"TodoLabel"> | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
-}, "id">
+}, "id" | "name" | "color">
 
 export type TodoLabelOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

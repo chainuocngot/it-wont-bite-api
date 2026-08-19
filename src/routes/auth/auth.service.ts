@@ -1,20 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { JsonWebTokenError } from '@nestjs/jwt';
 import {
   EmailAlreadyInUsedException,
+  RefreshTokenNotFoundException,
   UserNotFoundException,
   WrongPasswordException,
 } from 'src/routes/auth/auth.error';
 import {
   LoginBodyType,
   LoginResType,
+  RefreshTokenBodyType,
+  RefreshTokenResType,
   RegisterBodyType,
   RegisterResType,
 } from 'src/routes/auth/auth.model';
+import { createJwtErrorException } from 'src/shared/error';
 import { UserType } from 'src/shared/models/user.model';
 import { RefreshTokenRepository } from 'src/shared/repositories/refresh-token.repository';
 import { UserRepository } from 'src/shared/repositories/user.repository';
 import { HashingService } from 'src/shared/services/hashing.service';
 import { TokenService } from 'src/shared/services/token.service';
+import { isNotFoundPrismaError } from 'src/shared/utils/prisma.util';
 
 @Injectable()
 export class AuthService {
@@ -79,6 +85,69 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  async refreshToken(body: RefreshTokenBodyType): Promise<RefreshTokenResType> {
+    try {
+      const decodedRefreshToken = await this.tokenService.verifyRefreshToken(body.token);
+      const { userId, exp } = decodedRefreshToken;
+
+      const RTInDB = await this.refreshTokenRepository.findUnique({
+        where: {
+          userId_token: {
+            token: body.token,
+            userId,
+          },
+        },
+      });
+
+      if (RTInDB === null) {
+        throw RefreshTokenNotFoundException;
+      }
+
+      // Sign tokens
+      const $signAT = this.tokenService.signAccessToken({
+        userId,
+      });
+      const $signNewRTWithOldExp = this.tokenService.signRefreshToken({
+        userId,
+        exp,
+      });
+      const [accessToken, newRTWithOldExp] = await Promise.all([$signAT, $signNewRTWithOldExp]);
+
+      const $createNewRTWithOldExp = this.refreshTokenRepository.create({
+        data: {
+          token: newRTWithOldExp,
+          userId,
+          expiresAt: new Date(exp * 1000),
+        },
+      });
+      const $deleteOldRT = this.refreshTokenRepository.delete({
+        where: {
+          userId_token: {
+            token: body.token,
+            userId,
+          },
+        },
+      });
+
+      await Promise.all([$createNewRTWithOldExp, $deleteOldRT]);
+
+      return {
+        accessToken,
+        refreshToken: newRTWithOldExp,
+      };
+    } catch (error) {
+      if (isNotFoundPrismaError(error)) {
+        throw RefreshTokenNotFoundException;
+      }
+
+      if (error instanceof JsonWebTokenError) {
+        throw createJwtErrorException(error.message);
+      }
+
+      throw error;
+    }
   }
 
   private async _createAuthSession(userId: UserType['id']): Promise<{

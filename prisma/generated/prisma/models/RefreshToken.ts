@@ -233,6 +233,7 @@ export type RefreshTokenOrderByWithRelationInput = {
 
 export type RefreshTokenWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  userId_token?: Prisma.RefreshTokenUserIdTokenCompoundUniqueInput
   AND?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
   OR?: Prisma.RefreshTokenWhereInput[]
   NOT?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
@@ -241,7 +242,7 @@ export type RefreshTokenWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "userId_token">
 
 export type RefreshTokenOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -327,6 +328,11 @@ export type RefreshTokenListRelationFilter = {
 
 export type RefreshTokenOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RefreshTokenUserIdTokenCompoundUniqueInput = {
+  userId: number
+  token: string
 }
 
 export type RefreshTokenCountOrderByAggregateInput = {
