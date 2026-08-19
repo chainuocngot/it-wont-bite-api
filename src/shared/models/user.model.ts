@@ -10,4 +10,12 @@ export const UserSchema = z.object({
   updatedAt: dateTimeZod,
 });
 
+export const ProjectedUserSchema = UserSchema.pick({
+  id: true,
+  email: true,
+  name: true,
+  createdAt: true,
+});
+
 export type UserType = z.infer<typeof UserSchema>;
+export type ProjectedUserType = z.infer<typeof ProjectedUserSchema>;

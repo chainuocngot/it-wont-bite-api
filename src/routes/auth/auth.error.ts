@@ -1,8 +1,6 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { createUnprocessableEntityException } from 'src/shared/utils/error.util';
 
-export const UserNotFoundException = new NotFoundException('Error.UserNotFound');
-
 export const EmailAlreadyInUsedException = createUnprocessableEntityException([
   {
     field: 'email',

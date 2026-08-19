@@ -3,7 +3,6 @@ import { JsonWebTokenError } from '@nestjs/jwt';
 import {
   EmailAlreadyInUsedException,
   RefreshTokenNotFoundException,
-  UserNotFoundException,
   WrongPasswordException,
 } from 'src/routes/auth/auth.error';
 import {
@@ -16,7 +15,7 @@ import {
   RegisterBodyType,
   RegisterResType,
 } from 'src/routes/auth/auth.model';
-import { createJwtErrorException } from 'src/shared/error';
+import { createJwtErrorException, UserNotFoundException } from 'src/shared/error';
 import { UserType } from 'src/shared/models/user.model';
 import { RefreshTokenRepository } from 'src/shared/repositories/refresh-token.repository';
 import { UserRepository } from 'src/shared/repositories/user.repository';

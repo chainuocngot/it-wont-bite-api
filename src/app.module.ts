@@ -10,9 +10,10 @@ import { SharedModule } from 'src/shared/shared.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './routes/auth/auth.module';
 import { TodoModule } from './routes/todo/todo.module';
+import { UserModule } from './routes/user/user.module';
 
 @Module({
-  imports: [SharedModule, AuthModule, TodoModule],
+  imports: [SharedModule, AuthModule, TodoModule, UserModule],
   controllers: [AppController],
   providers: [
     AccessTokenGuard,
