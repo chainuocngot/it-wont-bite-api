@@ -9,6 +9,8 @@ import {
 import {
   LoginBodyType,
   LoginResType,
+  LogoutBodyType,
+  LogoutResType,
   RefreshTokenBodyType,
   RefreshTokenResType,
   RegisterBodyType,
@@ -144,6 +146,29 @@ export class AuthService {
 
       if (error instanceof JsonWebTokenError) {
         throw createJwtErrorException(error.message);
+      }
+
+      throw error;
+    }
+  }
+
+  async logout(userId: UserType['id'], body: LogoutBodyType): Promise<LogoutResType> {
+    try {
+      await this.refreshTokenRepository.delete({
+        where: {
+          userId_token: {
+            token: body.refreshToken,
+            userId,
+          },
+        },
+      });
+
+      return {
+        message: 'Success.Logout',
+      };
+    } catch (error) {
+      if (isNotFoundPrismaError(error)) {
+        throw RefreshTokenNotFoundException;
       }
 
       throw error;

@@ -4,13 +4,17 @@ import { ZodSerializerDto } from 'nestjs-zod';
 import {
   LoginBodyDto,
   LoginResDto,
+  LogoutBodyDto,
+  LogoutResDto,
   RefreshTokenBodyDto,
   RefreshTokenResDto,
   RegisterBodyDto,
   RegisterResDto,
 } from 'src/routes/auth/auth.dto';
 import { AuthService } from 'src/routes/auth/auth.service';
+import { ActiveUser } from 'src/shared/decorators/active-user.decorator';
 import { IsPublic } from 'src/shared/decorators/auth.decorator';
+import { UserType } from 'src/shared/models/user.model';
 
 @Controller('auth')
 export class AuthController {
@@ -38,5 +42,12 @@ export class AuthController {
   @ZodSerializerDto(RefreshTokenResDto)
   refreshToken(@Body() body: RefreshTokenBodyDto) {
     return this.authService.refreshToken(body);
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @ZodSerializerDto(LogoutResDto)
+  logout(@ActiveUser('userId') userId: UserType['id'], @Body() body: LogoutBodyDto) {
+    return this.authService.logout(userId, body);
   }
 }
