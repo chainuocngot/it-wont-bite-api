@@ -1,12 +1,15 @@
 export interface IRepository<
   TEntity,
   TCreateArgs,
+  TFindFirstArgs,
   TFindUniqueArgs,
   TFindManyArgs,
   TUpdateArgs,
   TDeleteArgs,
 > {
   create(args: TCreateArgs): Promise<TEntity>;
+
+  findFirst(args: TFindFirstArgs): Promise<TEntity | null>;
 
   findUnique(args: TFindUniqueArgs): Promise<TEntity | null>;
 

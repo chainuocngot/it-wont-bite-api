@@ -7,6 +7,7 @@ import z from 'zod';
 export const RegisterBodySchema = UserSchema.pick({
   email: true,
   name: true,
+  username: true,
   pwd: true,
 })
   .extend({

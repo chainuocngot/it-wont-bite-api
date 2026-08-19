@@ -7,6 +7,7 @@ import { PrismaService } from 'src/shared/services/prisma.service';
 export class RefreshTokenRepository extends BaseRepository<
   RefreshToken,
   Prisma.RefreshTokenCreateArgs,
+  Prisma.RefreshTokenFindFirstArgs,
   Prisma.RefreshTokenFindUniqueArgs,
   Prisma.RefreshTokenFindManyArgs,
   Prisma.RefreshTokenUpdateArgs,

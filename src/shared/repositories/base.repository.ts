@@ -3,6 +3,7 @@ import { IRepository } from 'src/shared/interfaces/repository.interface';
 export abstract class BaseRepository<
   TEntity,
   TCreateArgs,
+  TFindFirstArgs,
   TFindUniqueArgs,
   TFindManyArgs,
   TUpdateArgs,
@@ -10,6 +11,7 @@ export abstract class BaseRepository<
 > implements IRepository<
   TEntity,
   TCreateArgs,
+  TFindFirstArgs,
   TFindUniqueArgs,
   TFindManyArgs,
   TUpdateArgs,
@@ -18,6 +20,7 @@ export abstract class BaseRepository<
   protected constructor(
     protected readonly model: {
       create(args: TCreateArgs): Promise<TEntity>;
+      findFirst(args: TFindFirstArgs): Promise<TEntity | null>;
       findUnique(args: TFindUniqueArgs): Promise<TEntity | null>;
       findMany(args?: TFindManyArgs): Promise<TEntity[]>;
       update(args: TUpdateArgs): Promise<TEntity>;
@@ -27,6 +30,10 @@ export abstract class BaseRepository<
 
   create(args: TCreateArgs) {
     return this.model.create(args);
+  }
+
+  findFirst(args: TFindFirstArgs) {
+    return this.model.findFirst(args);
   }
 
   findUnique(args: TFindUniqueArgs) {

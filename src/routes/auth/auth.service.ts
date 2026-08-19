@@ -3,6 +3,7 @@ import { JsonWebTokenError } from '@nestjs/jwt';
 import {
   EmailAlreadyInUsedException,
   RefreshTokenNotFoundException,
+  UsernameAlreadyInUsedException,
   WrongPasswordException,
 } from 'src/routes/auth/auth.error';
 import {
@@ -34,14 +35,18 @@ export class AuthService {
 
   async register(body: RegisterBodyType): Promise<RegisterResType> {
     // Pre-check
-    const sameEmailUser = await this.userRepository.findUnique({
+    const sameEmailOrUsernameUser = await this.userRepository.findFirst({
       where: {
-        email: body.email,
+        OR: [{ email: body.email }, { username: body.username }],
       },
     });
 
-    if (sameEmailUser !== null) {
+    if (sameEmailOrUsernameUser !== null && sameEmailOrUsernameUser.email === body.email) {
       throw EmailAlreadyInUsedException;
+    }
+
+    if (sameEmailOrUsernameUser !== null && sameEmailOrUsernameUser.username === body.username) {
+      throw UsernameAlreadyInUsedException;
     }
 
     // Pre-payload
@@ -52,6 +57,7 @@ export class AuthService {
       data: {
         email: body.email,
         name: body.name,
+        username: body.username,
         pwd: hashedPwd,
       },
     });

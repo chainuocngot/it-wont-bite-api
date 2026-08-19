@@ -8,6 +8,13 @@ export const EmailAlreadyInUsedException = createUnprocessableEntityException([
   },
 ]);
 
+export const UsernameAlreadyInUsedException = createUnprocessableEntityException([
+  {
+    field: 'username',
+    message: 'Error.UsernameAlreadyInUsed',
+  },
+]);
+
 export const WrongPasswordException = new UnauthorizedException('Error.WrongPassword');
 
 export const RefreshTokenNotFoundException = new NotFoundException('Error.RefreshTokenNotFound');

@@ -7,6 +7,7 @@ import { PrismaService } from 'src/shared/services/prisma.service';
 export class TodoRepository extends BaseRepository<
   Todo,
   Prisma.TodoCreateArgs,
+  Prisma.TodoFindFirstArgs,
   Prisma.TodoFindUniqueArgs,
   Prisma.TodoFindManyArgs,
   Prisma.TodoUpdateArgs,

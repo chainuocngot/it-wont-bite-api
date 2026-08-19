@@ -33,6 +33,7 @@ model User {
   email     String   @unique
   pwd       String
   name      String
+  username  String   @unique
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -78,7 +79,7 @@ model RefreshToken {
 
   user User @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: Cascade)
 
-  @@index([userId])
   @@unique([userId, token])
+  @@index([userId])
   @@map("refresh_tokens")
 }

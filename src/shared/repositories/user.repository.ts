@@ -7,6 +7,7 @@ import { PrismaService } from 'src/shared/services/prisma.service';
 export class UserRepository extends BaseRepository<
   User,
   Prisma.UserCreateArgs,
+  Prisma.UserFindFirstArgs,
   Prisma.UserFindUniqueArgs,
   Prisma.UserFindManyArgs,
   Prisma.UserUpdateArgs,

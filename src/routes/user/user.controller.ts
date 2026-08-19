@@ -7,7 +7,7 @@ import { ActiveUser } from 'src/shared/decorators/active-user.decorator';
 import { UserType } from 'src/shared/models/user.model';
 
 @ApiBearerAuth()
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
