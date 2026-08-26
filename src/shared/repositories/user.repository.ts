@@ -27,4 +27,21 @@ export class UserRepository extends BaseRepository<
       },
     });
   }
+
+  updateWithProjectedUserReturn({
+    where,
+    data,
+  }: {
+    where: Prisma.UserWhereUniqueInput;
+    data: Prisma.UserUncheckedUpdateInput;
+  }): Promise<ProjectedUserType> {
+    return this.model.update({
+      where,
+      data,
+      omit: {
+        pwd: true,
+        updatedAt: true,
+      },
+    });
+  }
 }

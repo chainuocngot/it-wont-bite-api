@@ -1,4 +1,4 @@
-import { ProjectedUserSchema } from 'src/shared/models/user.model';
+import { ProjectedUserSchema, UserSchema } from 'src/shared/models/user.model';
 import z from 'zod';
 
 // Get Me
@@ -11,11 +11,22 @@ export const GetUserIdParamSchema = z.object({
   userId: z.coerce.number(),
 });
 
-export const GetUserUsernameParamSchema = z.object({
+export const GetUsernameParamSchema = z.object({
   username: z.string(),
 });
+
+// Update Me
+export const UpdateMeBodySchema = UserSchema.pick({
+  name: true,
+  username: true,
+  bio: true,
+}).partial();
+
+export const UpdateMeResSchema = ProjectedUserSchema;
 
 export type GetMeResType = z.infer<typeof GetMeResSchema>;
 export type GetUserByUsernameResType = z.infer<typeof GetUserByUsernameResSchema>;
 export type GetUserIdParamType = z.infer<typeof GetUserIdParamSchema>;
-export type GetUserUsernameParamType = z.infer<typeof GetUserUsernameParamSchema>;
+export type GetUsernameParamType = z.infer<typeof GetUsernameParamSchema>;
+export type UpdateMeBodyType = z.infer<typeof UpdateMeBodySchema>;
+export type UpdateMeResType = z.infer<typeof UpdateMeResSchema>;

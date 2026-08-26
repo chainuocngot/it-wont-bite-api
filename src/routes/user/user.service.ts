@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { GetMeResType, GetUserByUsernameResType } from 'src/routes/user/user.model';
-import { UserNotFoundException } from 'src/shared/error';
+import {
+  GetMeResType,
+  GetUserByUsernameResType,
+  UpdateMeBodyType,
+  UpdateMeResType,
+} from 'src/routes/user/user.model';
+import { UsernameAlreadyInUsedException, UserNotFoundException } from 'src/shared/error';
 import { UserType } from 'src/shared/models/user.model';
 import { UserRepository } from 'src/shared/repositories/user.repository';
 
@@ -30,5 +35,29 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async updateMe(userId: UserType['id'], body: UpdateMeBodyType): Promise<UpdateMeResType> {
+    if (body.username) {
+      const userWithSameUsername = await this.userRepository.findFirst({
+        where: {
+          username: body.username,
+          id: {
+            not: userId,
+          },
+        },
+      });
+
+      if (userWithSameUsername !== null) {
+        throw UsernameAlreadyInUsedException;
+      }
+    }
+
+    return this.userRepository.updateWithProjectedUserReturn({
+      where: {
+        id: userId,
+      },
+      data: body,
+    });
   }
 }

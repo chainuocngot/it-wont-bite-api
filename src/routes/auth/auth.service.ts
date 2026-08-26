@@ -3,7 +3,6 @@ import { JsonWebTokenError } from '@nestjs/jwt';
 import {
   EmailAlreadyInUsedException,
   RefreshTokenNotFoundException,
-  UsernameAlreadyInUsedException,
   WrongPasswordException,
 } from 'src/routes/auth/auth.error';
 import {
@@ -16,7 +15,11 @@ import {
   RegisterBodyType,
   RegisterResType,
 } from 'src/routes/auth/auth.model';
-import { createJwtErrorException, UserNotFoundException } from 'src/shared/error';
+import {
+  createJwtErrorException,
+  UsernameAlreadyInUsedException,
+  UserNotFoundException,
+} from 'src/shared/error';
 import { UserType } from 'src/shared/models/user.model';
 import { RefreshTokenRepository } from 'src/shared/repositories/refresh-token.repository';
 import { UserRepository } from 'src/shared/repositories/user.repository';
@@ -35,17 +38,20 @@ export class AuthService {
 
   async register(body: RegisterBodyType): Promise<RegisterResType> {
     // Pre-check
-    const sameEmailOrUsernameUser = await this.userRepository.findFirst({
+    const userWithSameEmailOrUsername = await this.userRepository.findFirst({
       where: {
         OR: [{ email: body.email }, { username: body.username }],
       },
     });
 
-    if (sameEmailOrUsernameUser !== null && sameEmailOrUsernameUser.email === body.email) {
+    if (userWithSameEmailOrUsername !== null && userWithSameEmailOrUsername.email === body.email) {
       throw EmailAlreadyInUsedException;
     }
 
-    if (sameEmailOrUsernameUser !== null && sameEmailOrUsernameUser.username === body.username) {
+    if (
+      userWithSameEmailOrUsername !== null &&
+      userWithSameEmailOrUsername.username === body.username
+    ) {
       throw UsernameAlreadyInUsedException;
     }
 

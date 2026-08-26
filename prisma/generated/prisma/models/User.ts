@@ -201,7 +201,7 @@ export type UserGroupByOutputType = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio: string | null
   username: string
   createdAt: Date
   updatedAt: Date
@@ -235,7 +235,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   pwd?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
-  bio?: Prisma.StringFilter<"User"> | string
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
   username?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -248,7 +248,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   pwd?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  bio?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -265,7 +265,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   pwd?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
-  bio?: Prisma.StringFilter<"User"> | string
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   todos?: Prisma.TodoListRelationFilter
@@ -277,7 +277,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   pwd?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  bio?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -296,7 +296,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   pwd?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  bio?: Prisma.StringWithAggregatesFilter<"User"> | string
+  bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -306,7 +306,7 @@ export type UserCreateInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -319,7 +319,7 @@ export type UserUncheckedCreateInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -331,7 +331,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -344,7 +344,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -357,7 +357,7 @@ export type UserCreateManyInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -367,7 +367,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,7 +378,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -434,6 +434,10 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -478,7 +482,7 @@ export type UserCreateWithoutTodosInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -490,7 +494,7 @@ export type UserUncheckedCreateWithoutTodosInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -517,7 +521,7 @@ export type UserUpdateWithoutTodosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -529,7 +533,7 @@ export type UserUncheckedUpdateWithoutTodosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -540,7 +544,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -552,7 +556,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   email: string
   pwd: string
   name: string
-  bio: string
+  bio?: string | null
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -579,7 +583,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -591,7 +595,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   pwd?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -705,7 +709,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     pwd: string
     name: string
-    bio: string
+    bio: string | null
     username: string
     createdAt: Date
     updatedAt: Date

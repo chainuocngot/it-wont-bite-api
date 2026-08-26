@@ -7,7 +7,7 @@ export const UserSchema = z.object({
   pwd: z.string(),
   username: z.string(),
   name: z.string(),
-  bio: z.string(),
+  bio: z.string().nullable(),
   createdAt: dateTimeZod,
   updatedAt: dateTimeZod,
 });

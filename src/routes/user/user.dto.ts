@@ -3,7 +3,9 @@ import {
   GetMeResSchema,
   GetUserByUsernameResSchema,
   GetUserIdParamSchema,
-  GetUserUsernameParamSchema,
+  GetUsernameParamSchema,
+  UpdateMeBodySchema,
+  UpdateMeResSchema,
 } from 'src/routes/user/user.model';
 
 export class GetMeResDto extends createZodDto(GetMeResSchema, { codec: true }) {}
@@ -14,4 +16,10 @@ export class GetUserByUsernameResDto extends createZodDto(GetUserByUsernameResSc
 
 export class GetUserIdParamDto extends createZodDto(GetUserIdParamSchema) {}
 
-export class GetUserUsernameParamDto extends createZodDto(GetUserUsernameParamSchema) {}
+export class GetUsernameParamDto extends createZodDto(GetUsernameParamSchema) {}
+
+export class UpdateMeBodyDto extends createZodDto(UpdateMeBodySchema) {}
+
+export class UpdateMeResDto extends createZodDto(UpdateMeResSchema, {
+  codec: true,
+}) {}
