@@ -4,8 +4,8 @@ import { BaseRepository } from 'src/shared/repositories/base.repository';
 import { PrismaService } from 'src/shared/services/prisma.service';
 
 @Injectable()
-export class RefreshTokenRepository extends BaseRepository<Prisma.RefreshTokenDelegate> {
+export class TodoLabelRepository extends BaseRepository<Prisma.TodoLabelDelegate> {
   constructor(prisma: PrismaService) {
-    super(prisma.refreshToken);
+    super(prisma.todoLabel);
   }
 }

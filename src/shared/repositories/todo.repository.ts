@@ -1,18 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Todo } from 'prisma/generated/prisma/client';
+import { Prisma } from 'prisma/generated/prisma/client';
 import { BaseRepository } from 'src/shared/repositories/base.repository';
 import { PrismaService } from 'src/shared/services/prisma.service';
 
 @Injectable()
-export class TodoRepository extends BaseRepository<
-  Todo,
-  Prisma.TodoCreateArgs,
-  Prisma.TodoFindFirstArgs,
-  Prisma.TodoFindUniqueArgs,
-  Prisma.TodoFindManyArgs,
-  Prisma.TodoUpdateArgs,
-  Prisma.TodoDeleteArgs
-> {
+export class TodoRepository extends BaseRepository<Prisma.TodoDelegate> {
   constructor(prisma: PrismaService) {
     super(prisma.todo);
   }

@@ -9,6 +9,7 @@ const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
+
 async function main() {
   const labels: { name: string; color: TypeOfTodoLabelColor }[] = [
     { name: 'Work', color: TodoLabelColor.Blue },

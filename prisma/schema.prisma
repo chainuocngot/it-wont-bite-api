@@ -50,12 +50,14 @@ model Todo {
   title       String
   status      TodoStatus
   description String?
-  dueAt       DateTime?  @map("due_at") @db.Date
+  dueAt       DateTime?  @map("due_at")
   remindAt    DateTime?  @map("remind_at")
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
+  isFav       Boolean    @default(false) @map("is_fav")
 
   user User @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: Cascade)
+  labels TodoLabel[]
 
   @@index([userId])
   @@map("todos")
@@ -63,10 +65,12 @@ model Todo {
 
 model TodoLabel {
   id        Int            @id @default(autoincrement())
-  name      String?        @unique
+  name      String         @unique
   color     TodoLabelColor @unique
   createdAt DateTime       @default(now()) @map("created_at")
   updatedAt DateTime       @updatedAt @map("updated_at")
+
+  todos Todo[]
 
   @@map("todo_labels")
 }

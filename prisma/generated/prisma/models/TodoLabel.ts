@@ -180,7 +180,7 @@ export type TodoLabelGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type TodoLabelGroupByOutputType = {
   id: number
-  name: string | null
+  name: string
   color: $Enums.TodoLabelColor
   createdAt: Date
   updatedAt: Date
@@ -211,18 +211,20 @@ export type TodoLabelWhereInput = {
   OR?: Prisma.TodoLabelWhereInput[]
   NOT?: Prisma.TodoLabelWhereInput | Prisma.TodoLabelWhereInput[]
   id?: Prisma.IntFilter<"TodoLabel"> | number
-  name?: Prisma.StringNullableFilter<"TodoLabel"> | string | null
+  name?: Prisma.StringFilter<"TodoLabel"> | string
   color?: Prisma.EnumTodoLabelColorFilter<"TodoLabel"> | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
+  todos?: Prisma.TodoListRelationFilter
 }
 
 export type TodoLabelOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  todos?: Prisma.TodoOrderByRelationAggregateInput
 }
 
 export type TodoLabelWhereUniqueInput = Prisma.AtLeast<{
@@ -234,11 +236,12 @@ export type TodoLabelWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TodoLabelWhereInput | Prisma.TodoLabelWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
+  todos?: Prisma.TodoListRelationFilter
 }, "id" | "name" | "color">
 
 export type TodoLabelOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -254,52 +257,56 @@ export type TodoLabelScalarWhereWithAggregatesInput = {
   OR?: Prisma.TodoLabelScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TodoLabelScalarWhereWithAggregatesInput | Prisma.TodoLabelScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"TodoLabel"> | number
-  name?: Prisma.StringNullableWithAggregatesFilter<"TodoLabel"> | string | null
+  name?: Prisma.StringWithAggregatesFilter<"TodoLabel"> | string
   color?: Prisma.EnumTodoLabelColorWithAggregatesFilter<"TodoLabel"> | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TodoLabel"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TodoLabel"> | Date | string
 }
 
 export type TodoLabelCreateInput = {
-  name?: string | null
+  name: string
   color: $Enums.TodoLabelColor
   createdAt?: Date | string
   updatedAt?: Date | string
+  todos?: Prisma.TodoCreateNestedManyWithoutLabelsInput
 }
 
 export type TodoLabelUncheckedCreateInput = {
   id?: number
-  name?: string | null
+  name: string
   color: $Enums.TodoLabelColor
   createdAt?: Date | string
   updatedAt?: Date | string
+  todos?: Prisma.TodoUncheckedCreateNestedManyWithoutLabelsInput
 }
 
 export type TodoLabelUpdateInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  todos?: Prisma.TodoUpdateManyWithoutLabelsNestedInput
 }
 
 export type TodoLabelUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  todos?: Prisma.TodoUncheckedUpdateManyWithoutLabelsNestedInput
 }
 
 export type TodoLabelCreateManyInput = {
   id?: number
-  name?: string | null
+  name: string
   color: $Enums.TodoLabelColor
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type TodoLabelUpdateManyMutationInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -307,10 +314,20 @@ export type TodoLabelUpdateManyMutationInput = {
 
 export type TodoLabelUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TodoLabelListRelationFilter = {
+  every?: Prisma.TodoLabelWhereInput
+  some?: Prisma.TodoLabelWhereInput
+  none?: Prisma.TodoLabelWhereInput
+}
+
+export type TodoLabelOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type TodoLabelCountOrderByAggregateInput = {
@@ -345,10 +362,147 @@ export type TodoLabelSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type TodoLabelCreateNestedManyWithoutTodosInput = {
+  create?: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput> | Prisma.TodoLabelCreateWithoutTodosInput[] | Prisma.TodoLabelUncheckedCreateWithoutTodosInput[]
+  connectOrCreate?: Prisma.TodoLabelCreateOrConnectWithoutTodosInput | Prisma.TodoLabelCreateOrConnectWithoutTodosInput[]
+  connect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+}
+
+export type TodoLabelUncheckedCreateNestedManyWithoutTodosInput = {
+  create?: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput> | Prisma.TodoLabelCreateWithoutTodosInput[] | Prisma.TodoLabelUncheckedCreateWithoutTodosInput[]
+  connectOrCreate?: Prisma.TodoLabelCreateOrConnectWithoutTodosInput | Prisma.TodoLabelCreateOrConnectWithoutTodosInput[]
+  connect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+}
+
+export type TodoLabelUpdateManyWithoutTodosNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput> | Prisma.TodoLabelCreateWithoutTodosInput[] | Prisma.TodoLabelUncheckedCreateWithoutTodosInput[]
+  connectOrCreate?: Prisma.TodoLabelCreateOrConnectWithoutTodosInput | Prisma.TodoLabelCreateOrConnectWithoutTodosInput[]
+  upsert?: Prisma.TodoLabelUpsertWithWhereUniqueWithoutTodosInput | Prisma.TodoLabelUpsertWithWhereUniqueWithoutTodosInput[]
+  set?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  disconnect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  delete?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  connect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  update?: Prisma.TodoLabelUpdateWithWhereUniqueWithoutTodosInput | Prisma.TodoLabelUpdateWithWhereUniqueWithoutTodosInput[]
+  updateMany?: Prisma.TodoLabelUpdateManyWithWhereWithoutTodosInput | Prisma.TodoLabelUpdateManyWithWhereWithoutTodosInput[]
+  deleteMany?: Prisma.TodoLabelScalarWhereInput | Prisma.TodoLabelScalarWhereInput[]
+}
+
+export type TodoLabelUncheckedUpdateManyWithoutTodosNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput> | Prisma.TodoLabelCreateWithoutTodosInput[] | Prisma.TodoLabelUncheckedCreateWithoutTodosInput[]
+  connectOrCreate?: Prisma.TodoLabelCreateOrConnectWithoutTodosInput | Prisma.TodoLabelCreateOrConnectWithoutTodosInput[]
+  upsert?: Prisma.TodoLabelUpsertWithWhereUniqueWithoutTodosInput | Prisma.TodoLabelUpsertWithWhereUniqueWithoutTodosInput[]
+  set?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  disconnect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  delete?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  connect?: Prisma.TodoLabelWhereUniqueInput | Prisma.TodoLabelWhereUniqueInput[]
+  update?: Prisma.TodoLabelUpdateWithWhereUniqueWithoutTodosInput | Prisma.TodoLabelUpdateWithWhereUniqueWithoutTodosInput[]
+  updateMany?: Prisma.TodoLabelUpdateManyWithWhereWithoutTodosInput | Prisma.TodoLabelUpdateManyWithWhereWithoutTodosInput[]
+  deleteMany?: Prisma.TodoLabelScalarWhereInput | Prisma.TodoLabelScalarWhereInput[]
+}
+
 export type EnumTodoLabelColorFieldUpdateOperationsInput = {
   set?: $Enums.TodoLabelColor
 }
 
+export type TodoLabelCreateWithoutTodosInput = {
+  name: string
+  color: $Enums.TodoLabelColor
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TodoLabelUncheckedCreateWithoutTodosInput = {
+  id?: number
+  name: string
+  color: $Enums.TodoLabelColor
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TodoLabelCreateOrConnectWithoutTodosInput = {
+  where: Prisma.TodoLabelWhereUniqueInput
+  create: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput>
+}
+
+export type TodoLabelUpsertWithWhereUniqueWithoutTodosInput = {
+  where: Prisma.TodoLabelWhereUniqueInput
+  update: Prisma.XOR<Prisma.TodoLabelUpdateWithoutTodosInput, Prisma.TodoLabelUncheckedUpdateWithoutTodosInput>
+  create: Prisma.XOR<Prisma.TodoLabelCreateWithoutTodosInput, Prisma.TodoLabelUncheckedCreateWithoutTodosInput>
+}
+
+export type TodoLabelUpdateWithWhereUniqueWithoutTodosInput = {
+  where: Prisma.TodoLabelWhereUniqueInput
+  data: Prisma.XOR<Prisma.TodoLabelUpdateWithoutTodosInput, Prisma.TodoLabelUncheckedUpdateWithoutTodosInput>
+}
+
+export type TodoLabelUpdateManyWithWhereWithoutTodosInput = {
+  where: Prisma.TodoLabelScalarWhereInput
+  data: Prisma.XOR<Prisma.TodoLabelUpdateManyMutationInput, Prisma.TodoLabelUncheckedUpdateManyWithoutTodosInput>
+}
+
+export type TodoLabelScalarWhereInput = {
+  AND?: Prisma.TodoLabelScalarWhereInput | Prisma.TodoLabelScalarWhereInput[]
+  OR?: Prisma.TodoLabelScalarWhereInput[]
+  NOT?: Prisma.TodoLabelScalarWhereInput | Prisma.TodoLabelScalarWhereInput[]
+  id?: Prisma.IntFilter<"TodoLabel"> | number
+  name?: Prisma.StringFilter<"TodoLabel"> | string
+  color?: Prisma.EnumTodoLabelColorFilter<"TodoLabel"> | $Enums.TodoLabelColor
+  createdAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"TodoLabel"> | Date | string
+}
+
+export type TodoLabelUpdateWithoutTodosInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TodoLabelUncheckedUpdateWithoutTodosInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TodoLabelUncheckedUpdateManyWithoutTodosInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.EnumTodoLabelColorFieldUpdateOperationsInput | $Enums.TodoLabelColor
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type TodoLabelCountOutputType
+ */
+
+export type TodoLabelCountOutputType = {
+  todos: number
+}
+
+export type TodoLabelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  todos?: boolean | TodoLabelCountOutputTypeCountTodosArgs
+}
+
+/**
+ * TodoLabelCountOutputType without action
+ */
+export type TodoLabelCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TodoLabelCountOutputType
+   */
+  select?: Prisma.TodoLabelCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TodoLabelCountOutputType without action
+ */
+export type TodoLabelCountOutputTypeCountTodosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TodoWhereInput
+}
 
 
 export type TodoLabelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -357,6 +511,8 @@ export type TodoLabelSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   color?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  todos?: boolean | Prisma.TodoLabel$todosArgs<ExtArgs>
+  _count?: boolean | Prisma.TodoLabelCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["todoLabel"]>
 
 export type TodoLabelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -384,13 +540,21 @@ export type TodoLabelSelectScalar = {
 }
 
 export type TodoLabelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "color" | "createdAt" | "updatedAt", ExtArgs["result"]["todoLabel"]>
+export type TodoLabelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  todos?: boolean | Prisma.TodoLabel$todosArgs<ExtArgs>
+  _count?: boolean | Prisma.TodoLabelCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type TodoLabelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type TodoLabelIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $TodoLabelPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TodoLabel"
-  objects: {}
+  objects: {
+    todos: Prisma.$TodoPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    name: string | null
+    name: string
     color: $Enums.TodoLabelColor
     createdAt: Date
     updatedAt: Date
@@ -788,6 +952,7 @@ readonly fields: TodoLabelFieldRefs;
  */
 export interface Prisma__TodoLabelClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  todos<T extends Prisma.TodoLabel$todosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TodoLabel$todosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -839,6 +1004,10 @@ export type TodoLabelFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * Filter, which TodoLabel to fetch.
    */
   where: Prisma.TodoLabelWhereUniqueInput
@@ -857,6 +1026,10 @@ export type TodoLabelFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * Filter, which TodoLabel to fetch.
    */
   where: Prisma.TodoLabelWhereUniqueInput
@@ -874,6 +1047,10 @@ export type TodoLabelFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the TodoLabel
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
   /**
    * Filter, which TodoLabel to fetch.
    */
@@ -923,6 +1100,10 @@ export type TodoLabelFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * Filter, which TodoLabel to fetch.
    */
   where?: Prisma.TodoLabelWhereInput
@@ -970,6 +1151,10 @@ export type TodoLabelFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the TodoLabel
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
   /**
    * Filter, which TodoLabels to fetch.
    */
@@ -1019,6 +1204,10 @@ export type TodoLabelCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * The data needed to create a TodoLabel.
    */
   data: Prisma.XOR<Prisma.TodoLabelCreateInput, Prisma.TodoLabelUncheckedCreateInput>
@@ -1066,6 +1255,10 @@ export type TodoLabelUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the TodoLabel
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
   /**
    * The data needed to update a TodoLabel.
    */
@@ -1133,6 +1326,10 @@ export type TodoLabelUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * The filter to search for the TodoLabel to update in case it exists.
    */
   where: Prisma.TodoLabelWhereUniqueInput
@@ -1159,6 +1356,10 @@ export type TodoLabelDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  /**
    * Filter which TodoLabel to delete.
    */
   where: Prisma.TodoLabelWhereUniqueInput
@@ -1179,6 +1380,30 @@ export type TodoLabelDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * TodoLabel.todos
+ */
+export type TodoLabel$todosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Todo
+   */
+  select?: Prisma.TodoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Todo
+   */
+  omit?: Prisma.TodoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoInclude<ExtArgs> | null
+  where?: Prisma.TodoWhereInput
+  orderBy?: Prisma.TodoOrderByWithRelationInput | Prisma.TodoOrderByWithRelationInput[]
+  cursor?: Prisma.TodoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TodoScalarFieldEnum | Prisma.TodoScalarFieldEnum[]
+}
+
+/**
  * TodoLabel without action
  */
 export type TodoLabelDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1190,4 +1415,8 @@ export type TodoLabelDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the TodoLabel
    */
   omit?: Prisma.TodoLabelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
 }

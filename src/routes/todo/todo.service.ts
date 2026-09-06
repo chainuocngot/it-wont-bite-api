@@ -12,6 +12,7 @@ import {
 import { TodoType } from 'src/shared/models/todo.model';
 import { UserType } from 'src/shared/models/user.model';
 import { TodoRepository } from 'src/shared/repositories/todo.repository';
+import { PrismaService } from 'src/shared/services/prisma.service';
 import { isNotFoundPrismaError } from 'src/shared/utils/prisma.util';
 
 @Injectable()
@@ -32,6 +33,17 @@ export class TodoService {
       where: {
         userId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        labels: {
+          omit: {
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
     });
   }
 
@@ -45,12 +57,21 @@ export class TodoService {
     body: UpdateTodoBodyType;
   }): Promise<UpdateTodoResType> {
     try {
+      const { labels: labelIds, ...restBody } = body;
+
       return await this.todoRepository.update({
         where: {
           id: todoId,
           userId,
         },
-        data: body,
+        data: {
+          ...restBody,
+          ...(labelIds !== undefined && {
+            labels: {
+              set: labelIds.map((id) => ({ id })),
+            },
+          }),
+        },
       });
     } catch (error) {
       if (isNotFoundPrismaError(error)) {

@@ -45,6 +45,7 @@ export type TodoMinAggregateOutputType = {
   remindAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  isFav: boolean | null
 }
 
 export type TodoMaxAggregateOutputType = {
@@ -57,6 +58,7 @@ export type TodoMaxAggregateOutputType = {
   remindAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  isFav: boolean | null
 }
 
 export type TodoCountAggregateOutputType = {
@@ -69,6 +71,7 @@ export type TodoCountAggregateOutputType = {
   remindAt: number
   createdAt: number
   updatedAt: number
+  isFav: number
   _all: number
 }
 
@@ -93,6 +96,7 @@ export type TodoMinAggregateInputType = {
   remindAt?: true
   createdAt?: true
   updatedAt?: true
+  isFav?: true
 }
 
 export type TodoMaxAggregateInputType = {
@@ -105,6 +109,7 @@ export type TodoMaxAggregateInputType = {
   remindAt?: true
   createdAt?: true
   updatedAt?: true
+  isFav?: true
 }
 
 export type TodoCountAggregateInputType = {
@@ -117,6 +122,7 @@ export type TodoCountAggregateInputType = {
   remindAt?: true
   createdAt?: true
   updatedAt?: true
+  isFav?: true
   _all?: true
 }
 
@@ -216,6 +222,7 @@ export type TodoGroupByOutputType = {
   remindAt: Date | null
   createdAt: Date
   updatedAt: Date
+  isFav: boolean
   _count: TodoCountAggregateOutputType | null
   _avg: TodoAvgAggregateOutputType | null
   _sum: TodoSumAggregateOutputType | null
@@ -251,7 +258,9 @@ export type TodoWhereInput = {
   remindAt?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+  isFav?: Prisma.BoolFilter<"Todo"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  labels?: Prisma.TodoLabelListRelationFilter
 }
 
 export type TodoOrderByWithRelationInput = {
@@ -264,7 +273,9 @@ export type TodoOrderByWithRelationInput = {
   remindAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isFav?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  labels?: Prisma.TodoLabelOrderByRelationAggregateInput
 }
 
 export type TodoWhereUniqueInput = Prisma.AtLeast<{
@@ -280,7 +291,9 @@ export type TodoWhereUniqueInput = Prisma.AtLeast<{
   remindAt?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+  isFav?: Prisma.BoolFilter<"Todo"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  labels?: Prisma.TodoLabelListRelationFilter
 }, "id">
 
 export type TodoOrderByWithAggregationInput = {
@@ -293,6 +306,7 @@ export type TodoOrderByWithAggregationInput = {
   remindAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isFav?: Prisma.SortOrder
   _count?: Prisma.TodoCountOrderByAggregateInput
   _avg?: Prisma.TodoAvgOrderByAggregateInput
   _max?: Prisma.TodoMaxOrderByAggregateInput
@@ -313,6 +327,7 @@ export type TodoScalarWhereWithAggregatesInput = {
   remindAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Todo"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Todo"> | Date | string
+  isFav?: Prisma.BoolWithAggregatesFilter<"Todo"> | boolean
 }
 
 export type TodoCreateInput = {
@@ -323,7 +338,9 @@ export type TodoCreateInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
   user: Prisma.UserCreateNestedOneWithoutTodosInput
+  labels?: Prisma.TodoLabelCreateNestedManyWithoutTodosInput
 }
 
 export type TodoUncheckedCreateInput = {
@@ -336,6 +353,8 @@ export type TodoUncheckedCreateInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
+  labels?: Prisma.TodoLabelUncheckedCreateNestedManyWithoutTodosInput
 }
 
 export type TodoUpdateInput = {
@@ -346,7 +365,9 @@ export type TodoUpdateInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTodosNestedInput
+  labels?: Prisma.TodoLabelUpdateManyWithoutTodosNestedInput
 }
 
 export type TodoUncheckedUpdateInput = {
@@ -359,6 +380,8 @@ export type TodoUncheckedUpdateInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  labels?: Prisma.TodoLabelUncheckedUpdateManyWithoutTodosNestedInput
 }
 
 export type TodoCreateManyInput = {
@@ -371,6 +394,7 @@ export type TodoCreateManyInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
 }
 
 export type TodoUpdateManyMutationInput = {
@@ -381,6 +405,7 @@ export type TodoUpdateManyMutationInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TodoUncheckedUpdateManyInput = {
@@ -393,6 +418,7 @@ export type TodoUncheckedUpdateManyInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TodoListRelationFilter = {
@@ -415,6 +441,7 @@ export type TodoCountOrderByAggregateInput = {
   remindAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isFav?: Prisma.SortOrder
 }
 
 export type TodoAvgOrderByAggregateInput = {
@@ -432,6 +459,7 @@ export type TodoMaxOrderByAggregateInput = {
   remindAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isFav?: Prisma.SortOrder
 }
 
 export type TodoMinOrderByAggregateInput = {
@@ -444,6 +472,7 @@ export type TodoMinOrderByAggregateInput = {
   remindAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isFav?: Prisma.SortOrder
 }
 
 export type TodoSumOrderByAggregateInput = {
@@ -501,6 +530,48 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type TodoCreateNestedManyWithoutLabelsInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput> | Prisma.TodoCreateWithoutLabelsInput[] | Prisma.TodoUncheckedCreateWithoutLabelsInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutLabelsInput | Prisma.TodoCreateOrConnectWithoutLabelsInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+}
+
+export type TodoUncheckedCreateNestedManyWithoutLabelsInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput> | Prisma.TodoCreateWithoutLabelsInput[] | Prisma.TodoUncheckedCreateWithoutLabelsInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutLabelsInput | Prisma.TodoCreateOrConnectWithoutLabelsInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+}
+
+export type TodoUpdateManyWithoutLabelsNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput> | Prisma.TodoCreateWithoutLabelsInput[] | Prisma.TodoUncheckedCreateWithoutLabelsInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutLabelsInput | Prisma.TodoCreateOrConnectWithoutLabelsInput[]
+  upsert?: Prisma.TodoUpsertWithWhereUniqueWithoutLabelsInput | Prisma.TodoUpsertWithWhereUniqueWithoutLabelsInput[]
+  set?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  disconnect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  delete?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  update?: Prisma.TodoUpdateWithWhereUniqueWithoutLabelsInput | Prisma.TodoUpdateWithWhereUniqueWithoutLabelsInput[]
+  updateMany?: Prisma.TodoUpdateManyWithWhereWithoutLabelsInput | Prisma.TodoUpdateManyWithWhereWithoutLabelsInput[]
+  deleteMany?: Prisma.TodoScalarWhereInput | Prisma.TodoScalarWhereInput[]
+}
+
+export type TodoUncheckedUpdateManyWithoutLabelsNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput> | Prisma.TodoCreateWithoutLabelsInput[] | Prisma.TodoUncheckedCreateWithoutLabelsInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutLabelsInput | Prisma.TodoCreateOrConnectWithoutLabelsInput[]
+  upsert?: Prisma.TodoUpsertWithWhereUniqueWithoutLabelsInput | Prisma.TodoUpsertWithWhereUniqueWithoutLabelsInput[]
+  set?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  disconnect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  delete?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  update?: Prisma.TodoUpdateWithWhereUniqueWithoutLabelsInput | Prisma.TodoUpdateWithWhereUniqueWithoutLabelsInput[]
+  updateMany?: Prisma.TodoUpdateManyWithWhereWithoutLabelsInput | Prisma.TodoUpdateManyWithWhereWithoutLabelsInput[]
+  deleteMany?: Prisma.TodoScalarWhereInput | Prisma.TodoScalarWhereInput[]
+}
+
 export type TodoCreateWithoutUserInput = {
   title: string
   status: $Enums.TodoStatus
@@ -509,6 +580,8 @@ export type TodoCreateWithoutUserInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
+  labels?: Prisma.TodoLabelCreateNestedManyWithoutTodosInput
 }
 
 export type TodoUncheckedCreateWithoutUserInput = {
@@ -520,6 +593,8 @@ export type TodoUncheckedCreateWithoutUserInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
+  labels?: Prisma.TodoLabelUncheckedCreateNestedManyWithoutTodosInput
 }
 
 export type TodoCreateOrConnectWithoutUserInput = {
@@ -561,6 +636,53 @@ export type TodoScalarWhereInput = {
   remindAt?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+  isFav?: Prisma.BoolFilter<"Todo"> | boolean
+}
+
+export type TodoCreateWithoutLabelsInput = {
+  title: string
+  status: $Enums.TodoStatus
+  description?: string | null
+  dueAt?: Date | string | null
+  remindAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isFav?: boolean
+  user: Prisma.UserCreateNestedOneWithoutTodosInput
+}
+
+export type TodoUncheckedCreateWithoutLabelsInput = {
+  id?: number
+  userId: number
+  title: string
+  status: $Enums.TodoStatus
+  description?: string | null
+  dueAt?: Date | string | null
+  remindAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isFav?: boolean
+}
+
+export type TodoCreateOrConnectWithoutLabelsInput = {
+  where: Prisma.TodoWhereUniqueInput
+  create: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput>
+}
+
+export type TodoUpsertWithWhereUniqueWithoutLabelsInput = {
+  where: Prisma.TodoWhereUniqueInput
+  update: Prisma.XOR<Prisma.TodoUpdateWithoutLabelsInput, Prisma.TodoUncheckedUpdateWithoutLabelsInput>
+  create: Prisma.XOR<Prisma.TodoCreateWithoutLabelsInput, Prisma.TodoUncheckedCreateWithoutLabelsInput>
+}
+
+export type TodoUpdateWithWhereUniqueWithoutLabelsInput = {
+  where: Prisma.TodoWhereUniqueInput
+  data: Prisma.XOR<Prisma.TodoUpdateWithoutLabelsInput, Prisma.TodoUncheckedUpdateWithoutLabelsInput>
+}
+
+export type TodoUpdateManyWithWhereWithoutLabelsInput = {
+  where: Prisma.TodoScalarWhereInput
+  data: Prisma.XOR<Prisma.TodoUpdateManyMutationInput, Prisma.TodoUncheckedUpdateManyWithoutLabelsInput>
 }
 
 export type TodoCreateManyUserInput = {
@@ -572,6 +694,7 @@ export type TodoCreateManyUserInput = {
   remindAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  isFav?: boolean
 }
 
 export type TodoUpdateWithoutUserInput = {
@@ -582,6 +705,8 @@ export type TodoUpdateWithoutUserInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  labels?: Prisma.TodoLabelUpdateManyWithoutTodosNestedInput
 }
 
 export type TodoUncheckedUpdateWithoutUserInput = {
@@ -593,6 +718,8 @@ export type TodoUncheckedUpdateWithoutUserInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  labels?: Prisma.TodoLabelUncheckedUpdateManyWithoutTodosNestedInput
 }
 
 export type TodoUncheckedUpdateManyWithoutUserInput = {
@@ -604,8 +731,76 @@ export type TodoUncheckedUpdateManyWithoutUserInput = {
   remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
+export type TodoUpdateWithoutLabelsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTodoStatusFieldUpdateOperationsInput | $Enums.TodoStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutTodosNestedInput
+}
+
+export type TodoUncheckedUpdateWithoutLabelsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTodoStatusFieldUpdateOperationsInput | $Enums.TodoStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type TodoUncheckedUpdateManyWithoutLabelsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTodoStatusFieldUpdateOperationsInput | $Enums.TodoStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  remindAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFav?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+
+/**
+ * Count Type TodoCountOutputType
+ */
+
+export type TodoCountOutputType = {
+  labels: number
+}
+
+export type TodoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  labels?: boolean | TodoCountOutputTypeCountLabelsArgs
+}
+
+/**
+ * TodoCountOutputType without action
+ */
+export type TodoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TodoCountOutputType
+   */
+  select?: Prisma.TodoCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TodoCountOutputType without action
+ */
+export type TodoCountOutputTypeCountLabelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TodoLabelWhereInput
+}
 
 
 export type TodoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -618,7 +813,10 @@ export type TodoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   remindAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isFav?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  labels?: boolean | Prisma.Todo$labelsArgs<ExtArgs>
+  _count?: boolean | Prisma.TodoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
 
 export type TodoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -631,6 +829,7 @@ export type TodoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   remindAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isFav?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
 
@@ -644,6 +843,7 @@ export type TodoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   remindAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isFav?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
 
@@ -657,11 +857,14 @@ export type TodoSelectScalar = {
   remindAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isFav?: boolean
 }
 
-export type TodoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "status" | "description" | "dueAt" | "remindAt" | "createdAt" | "updatedAt", ExtArgs["result"]["todo"]>
+export type TodoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "status" | "description" | "dueAt" | "remindAt" | "createdAt" | "updatedAt" | "isFav", ExtArgs["result"]["todo"]>
 export type TodoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  labels?: boolean | Prisma.Todo$labelsArgs<ExtArgs>
+  _count?: boolean | Prisma.TodoCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TodoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -674,6 +877,7 @@ export type $TodoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Todo"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    labels: Prisma.$TodoLabelPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -685,6 +889,7 @@ export type $TodoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     remindAt: Date | null
     createdAt: Date
     updatedAt: Date
+    isFav: boolean
   }, ExtArgs["result"]["todo"]>
   composites: {}
 }
@@ -1080,6 +1285,7 @@ readonly fields: TodoFieldRefs;
 export interface Prisma__TodoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labels<T extends Prisma.Todo$labelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Todo$labelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodoLabelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1118,6 +1324,7 @@ export interface TodoFieldRefs {
   readonly remindAt: Prisma.FieldRef<"Todo", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Todo", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Todo", 'DateTime'>
+  readonly isFav: Prisma.FieldRef<"Todo", 'Boolean'>
 }
     
 
@@ -1516,6 +1723,30 @@ export type TodoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Todos to delete.
    */
   limit?: number
+}
+
+/**
+ * Todo.labels
+ */
+export type Todo$labelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TodoLabel
+   */
+  select?: Prisma.TodoLabelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TodoLabel
+   */
+  omit?: Prisma.TodoLabelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoLabelInclude<ExtArgs> | null
+  where?: Prisma.TodoLabelWhereInput
+  orderBy?: Prisma.TodoLabelOrderByWithRelationInput | Prisma.TodoLabelOrderByWithRelationInput[]
+  cursor?: Prisma.TodoLabelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TodoLabelScalarFieldEnum | Prisma.TodoLabelScalarFieldEnum[]
 }
 
 /**
