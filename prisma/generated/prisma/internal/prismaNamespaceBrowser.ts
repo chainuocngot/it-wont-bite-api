@@ -96,7 +96,8 @@ export const TodoScalarFieldEnum = {
   remindAt: 'remindAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isFav: 'isFav'
+  isFav: 'isFav',
+  removeFromTodayAt: 'removeFromTodayAt'
 } as const
 
 export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]

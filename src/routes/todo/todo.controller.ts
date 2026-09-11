@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodSerializerDto } from 'nestjs-zod';
@@ -16,6 +17,7 @@ import {
   CreateTodoBodyDto,
   CreateTodoResDto,
   GetTodoIdParamDto,
+  ListTodoFilterQueryDto,
   ListTodoResDto,
   UpdateTodoBodyDto,
   UpdateTodoResDto,
@@ -39,8 +41,8 @@ export class TodoController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @ZodSerializerDto(ListTodoResDto)
-  listTodo(@ActiveUser('userId') userId: UserType['id']) {
-    return this.todoService.listTodo(userId);
+  listTodo(@ActiveUser('userId') userId: UserType['id'], @Query() query: ListTodoFilterQueryDto) {
+    return this.todoService.listTodo(userId, query);
   }
 
   @Patch(':todoId')

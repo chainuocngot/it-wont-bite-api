@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { TodoWhereInput } from 'prisma/generated/prisma/models';
 import { TodoNotFoundException } from 'src/routes/todo/todo.error';
 import {
   CreateTodoBodyType,
   CreateTodoResType,
   DeleteTodoResType,
   GetTodoDetailResType,
+  ListTodoFilterQueryType,
   ListTodoResType,
   UpdateTodoBodyType,
   UpdateTodoResType,
@@ -12,7 +14,6 @@ import {
 import { TodoType } from 'src/shared/models/todo.model';
 import { UserType } from 'src/shared/models/user.model';
 import { TodoRepository } from 'src/shared/repositories/todo.repository';
-import { PrismaService } from 'src/shared/services/prisma.service';
 import { isNotFoundPrismaError } from 'src/shared/utils/prisma.util';
 
 @Injectable()
@@ -28,11 +29,30 @@ export class TodoService {
     });
   }
 
-  listTodo(userId: UserType['id']): Promise<ListTodoResType> {
+  listTodo(userId: UserType['id'], query: ListTodoFilterQueryType): Promise<ListTodoResType> {
+    const where: TodoWhereInput = {
+      userId,
+    };
+
+    if (query.isFav) {
+      where['isFav'] = query.isFav;
+    }
+
+    if (query.status && query.status.length > 0) {
+      where['status'] = {
+        in: query.status,
+      };
+    }
+
+    if (query.isToday) {
+      where['removeFromTodayAt'] = {
+        not: null,
+        gt: new Date(),
+      };
+    }
+
     return this.todoRepository.findMany({
-      where: {
-        userId,
-      },
+      where,
       orderBy: {
         createdAt: 'desc',
       },

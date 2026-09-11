@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import { AccessTokenGuard } from 'src/guards/access-token.guard';
@@ -14,7 +15,14 @@ import { TodoLabelModule } from './routes/todo-label/todo-label.module';
 import { UserModule } from './routes/user/user.module';
 
 @Module({
-  imports: [SharedModule, AuthModule, TodoModule, UserModule, TodoLabelModule],
+  imports: [
+    SharedModule,
+    AuthModule,
+    TodoModule,
+    UserModule,
+    TodoLabelModule,
+    ScheduleModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [
     AccessTokenGuard,
