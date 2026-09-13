@@ -10,6 +10,8 @@ import { SharedModule } from 'src/shared/shared.module';
 
 import { AppController } from './app.controller';
 import { AuthModule } from './routes/auth/auth.module';
+import { DiscordWebhookModule } from './routes/discord-webhook/discord-webhook.module';
+import { OauthModule } from './routes/oauth/oauth.module';
 import { TodoModule } from './routes/todo/todo.module';
 import { TodoLabelModule } from './routes/todo-label/todo-label.module';
 import { UserModule } from './routes/user/user.module';
@@ -22,6 +24,8 @@ import { UserModule } from './routes/user/user.module';
     UserModule,
     TodoLabelModule,
     ScheduleModule.forRoot(),
+    OauthModule,
+    DiscordWebhookModule,
   ],
   controllers: [AppController],
   providers: [

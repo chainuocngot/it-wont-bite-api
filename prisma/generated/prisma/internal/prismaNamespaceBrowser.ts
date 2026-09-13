@@ -53,7 +53,8 @@ export const ModelName = {
   User: 'User',
   Todo: 'Todo',
   TodoLabel: 'TodoLabel',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  DiscordWebhook: 'DiscordWebhook'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,12 +118,25 @@ export type TodoLabelScalarFieldEnum = (typeof TodoLabelScalarFieldEnum)[keyof t
 export const RefreshTokenScalarFieldEnum = {
   id: 'id',
   token: 'token',
-  userId: 'userId',
   expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  userId: 'userId'
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const DiscordWebhookScalarFieldEnum = {
+  id: 'id',
+  webhookUrl: 'webhookUrl',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type DiscordWebhookScalarFieldEnum = (typeof DiscordWebhookScalarFieldEnum)[keyof typeof DiscordWebhookScalarFieldEnum]
 
 
 export const SortOrder = {

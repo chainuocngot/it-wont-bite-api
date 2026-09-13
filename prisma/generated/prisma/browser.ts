@@ -36,3 +36,8 @@ export type TodoLabel = Prisma.TodoLabelModel
  * 
  */
 export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model DiscordWebhook
+ * 
+ */
+export type DiscordWebhook = Prisma.DiscordWebhookModel

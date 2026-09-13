@@ -399,7 +399,8 @@ export const ModelName = {
   User: 'User',
   Todo: 'Todo',
   TodoLabel: 'TodoLabel',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  DiscordWebhook: 'DiscordWebhook'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "todo" | "todoLabel" | "refreshToken"
+    modelProps: "user" | "todo" | "todoLabel" | "refreshToken" | "discordWebhook"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -715,6 +716,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DiscordWebhook: {
+      payload: Prisma.$DiscordWebhookPayload<ExtArgs>
+      fields: Prisma.DiscordWebhookFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DiscordWebhookFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DiscordWebhookFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        findFirst: {
+          args: Prisma.DiscordWebhookFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DiscordWebhookFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        findMany: {
+          args: Prisma.DiscordWebhookFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>[]
+        }
+        create: {
+          args: Prisma.DiscordWebhookCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        createMany: {
+          args: Prisma.DiscordWebhookCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DiscordWebhookCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>[]
+        }
+        delete: {
+          args: Prisma.DiscordWebhookDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        update: {
+          args: Prisma.DiscordWebhookUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        deleteMany: {
+          args: Prisma.DiscordWebhookDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DiscordWebhookUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DiscordWebhookUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>[]
+        }
+        upsert: {
+          args: Prisma.DiscordWebhookUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscordWebhookPayload>
+        }
+        aggregate: {
+          args: Prisma.DiscordWebhookAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDiscordWebhook>
+        }
+        groupBy: {
+          args: Prisma.DiscordWebhookGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DiscordWebhookGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DiscordWebhookCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DiscordWebhookCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -799,12 +874,25 @@ export type TodoLabelScalarFieldEnum = (typeof TodoLabelScalarFieldEnum)[keyof t
 export const RefreshTokenScalarFieldEnum = {
   id: 'id',
   token: 'token',
-  userId: 'userId',
   expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  userId: 'userId'
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const DiscordWebhookScalarFieldEnum = {
+  id: 'id',
+  webhookUrl: 'webhookUrl',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type DiscordWebhookScalarFieldEnum = (typeof DiscordWebhookScalarFieldEnum)[keyof typeof DiscordWebhookScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1082,6 +1170,7 @@ export type GlobalOmitConfig = {
   todo?: Prisma.TodoOmit
   todoLabel?: Prisma.TodoLabelOmit
   refreshToken?: Prisma.RefreshTokenOmit
+  discordWebhook?: Prisma.DiscordWebhookOmit
 }
 
 /* Types for Logging */

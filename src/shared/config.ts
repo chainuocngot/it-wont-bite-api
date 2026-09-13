@@ -15,11 +15,21 @@ if (!fs.existsSync(envFilePath)) {
 
 const envSchema = z.object({
   DATABASE_URL: z.url(),
+  CLIENT_URL: z.url(),
   ACCESS_TOKEN_SECRET: z.string(),
   ACCESS_TOKEN_EXPIRES_IN: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
   REFRESH_TOKEN_EXPIRES_IN: z.string(),
   TOKEN_ALGORITHM: z.string(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+  GOOGLE_REDIRECT_URI: z.string(),
+  DISCORD_CLIENT_ID: z.string(),
+  DISCORD_CLIENT_SECRET: z.string(),
+  DISCORD_EXCHANGE_REDIRECT_URI: z.string(),
+  DISCORD_AUTHORIZE_REDIRECT_URI: z.string(),
+  DISCORD_BOT_TOKEN: z.string(),
+  DISCORD_BOT_PERMISSIONS_INTEGER: z.string(),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

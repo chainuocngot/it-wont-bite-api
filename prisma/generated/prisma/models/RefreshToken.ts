@@ -38,25 +38,25 @@ export type RefreshTokenSumAggregateOutputType = {
 export type RefreshTokenMinAggregateOutputType = {
   id: number | null
   token: string | null
-  userId: number | null
   expiresAt: Date | null
   createdAt: Date | null
+  userId: number | null
 }
 
 export type RefreshTokenMaxAggregateOutputType = {
   id: number | null
   token: string | null
-  userId: number | null
   expiresAt: Date | null
   createdAt: Date | null
+  userId: number | null
 }
 
 export type RefreshTokenCountAggregateOutputType = {
   id: number
   token: number
-  userId: number
   expiresAt: number
   createdAt: number
+  userId: number
   _all: number
 }
 
@@ -74,25 +74,25 @@ export type RefreshTokenSumAggregateInputType = {
 export type RefreshTokenMinAggregateInputType = {
   id?: true
   token?: true
-  userId?: true
   expiresAt?: true
   createdAt?: true
+  userId?: true
 }
 
 export type RefreshTokenMaxAggregateInputType = {
   id?: true
   token?: true
-  userId?: true
   expiresAt?: true
   createdAt?: true
+  userId?: true
 }
 
 export type RefreshTokenCountAggregateInputType = {
   id?: true
   token?: true
-  userId?: true
   expiresAt?: true
   createdAt?: true
+  userId?: true
   _all?: true
 }
 
@@ -185,9 +185,9 @@ export type RefreshTokenGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type RefreshTokenGroupByOutputType = {
   id: number
   token: string
-  userId: number
   expiresAt: Date
   createdAt: Date
+  userId: number
   _count: RefreshTokenCountAggregateOutputType | null
   _avg: RefreshTokenAvgAggregateOutputType | null
   _sum: RefreshTokenSumAggregateOutputType | null
@@ -216,18 +216,18 @@ export type RefreshTokenWhereInput = {
   NOT?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
   id?: Prisma.IntFilter<"RefreshToken"> | number
   token?: Prisma.StringFilter<"RefreshToken"> | string
-  userId?: Prisma.IntFilter<"RefreshToken"> | number
   expiresAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
+  userId?: Prisma.IntFilter<"RefreshToken"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type RefreshTokenOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   token?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -238,18 +238,18 @@ export type RefreshTokenWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.RefreshTokenWhereInput[]
   NOT?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
   token?: Prisma.StringFilter<"RefreshToken"> | string
-  userId?: Prisma.IntFilter<"RefreshToken"> | number
   expiresAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
+  userId?: Prisma.IntFilter<"RefreshToken"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId_token">
 
 export type RefreshTokenOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   token?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   _count?: Prisma.RefreshTokenCountOrderByAggregateInput
   _avg?: Prisma.RefreshTokenAvgOrderByAggregateInput
   _max?: Prisma.RefreshTokenMaxOrderByAggregateInput
@@ -263,9 +263,9 @@ export type RefreshTokenScalarWhereWithAggregatesInput = {
   NOT?: Prisma.RefreshTokenScalarWhereWithAggregatesInput | Prisma.RefreshTokenScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"RefreshToken"> | number
   token?: Prisma.StringWithAggregatesFilter<"RefreshToken"> | string
-  userId?: Prisma.IntWithAggregatesFilter<"RefreshToken"> | number
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
+  userId?: Prisma.IntWithAggregatesFilter<"RefreshToken"> | number
 }
 
 export type RefreshTokenCreateInput = {
@@ -278,9 +278,9 @@ export type RefreshTokenCreateInput = {
 export type RefreshTokenUncheckedCreateInput = {
   id?: number
   token: string
-  userId: number
   expiresAt: Date | string
   createdAt?: Date | string
+  userId: number
 }
 
 export type RefreshTokenUpdateInput = {
@@ -293,17 +293,17 @@ export type RefreshTokenUpdateInput = {
 export type RefreshTokenUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RefreshTokenCreateManyInput = {
   id?: number
   token: string
-  userId: number
   expiresAt: Date | string
   createdAt?: Date | string
+  userId: number
 }
 
 export type RefreshTokenUpdateManyMutationInput = {
@@ -315,9 +315,9 @@ export type RefreshTokenUpdateManyMutationInput = {
 export type RefreshTokenUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RefreshTokenListRelationFilter = {
@@ -338,9 +338,9 @@ export type RefreshTokenUserIdTokenCompoundUniqueInput = {
 export type RefreshTokenCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   token?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type RefreshTokenAvgOrderByAggregateInput = {
@@ -351,17 +351,17 @@ export type RefreshTokenAvgOrderByAggregateInput = {
 export type RefreshTokenMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   token?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type RefreshTokenMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   token?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type RefreshTokenSumOrderByAggregateInput = {
@@ -456,9 +456,9 @@ export type RefreshTokenScalarWhereInput = {
   NOT?: Prisma.RefreshTokenScalarWhereInput | Prisma.RefreshTokenScalarWhereInput[]
   id?: Prisma.IntFilter<"RefreshToken"> | number
   token?: Prisma.StringFilter<"RefreshToken"> | string
-  userId?: Prisma.IntFilter<"RefreshToken"> | number
   expiresAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
+  userId?: Prisma.IntFilter<"RefreshToken"> | number
 }
 
 export type RefreshTokenCreateManyUserInput = {
@@ -493,39 +493,39 @@ export type RefreshTokenUncheckedUpdateManyWithoutUserInput = {
 export type RefreshTokenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   token?: boolean
-  userId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["refreshToken"]>
 
 export type RefreshTokenSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   token?: boolean
-  userId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["refreshToken"]>
 
 export type RefreshTokenSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   token?: boolean
-  userId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["refreshToken"]>
 
 export type RefreshTokenSelectScalar = {
   id?: boolean
   token?: boolean
-  userId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  userId?: boolean
 }
 
-export type RefreshTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "userId" | "expiresAt" | "createdAt", ExtArgs["result"]["refreshToken"]>
+export type RefreshTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "expiresAt" | "createdAt" | "userId", ExtArgs["result"]["refreshToken"]>
 export type RefreshTokenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -544,9 +544,9 @@ export type $RefreshTokenPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     token: string
-    userId: number
     expiresAt: Date
     createdAt: Date
+    userId: number
   }, ExtArgs["result"]["refreshToken"]>
   composites: {}
 }
@@ -973,9 +973,9 @@ export interface Prisma__RefreshTokenClient<T, Null = never, ExtArgs extends run
 export interface RefreshTokenFieldRefs {
   readonly id: Prisma.FieldRef<"RefreshToken", 'Int'>
   readonly token: Prisma.FieldRef<"RefreshToken", 'String'>
-  readonly userId: Prisma.FieldRef<"RefreshToken", 'Int'>
   readonly expiresAt: Prisma.FieldRef<"RefreshToken", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"RefreshToken", 'DateTime'>
+  readonly userId: Prisma.FieldRef<"RefreshToken", 'Int'>
 }
     
 

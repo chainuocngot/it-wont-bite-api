@@ -24,6 +24,7 @@ import { UserType } from 'src/shared/models/user.model';
 import { RefreshTokenRepository } from 'src/shared/repositories/refresh-token.repository';
 import { UserRepository } from 'src/shared/repositories/user.repository';
 import { HashingService } from 'src/shared/services/hashing.service';
+import { SharedAuthService } from 'src/shared/services/shared-auth.service';
 import { TokenService } from 'src/shared/services/token.service';
 import { isNotFoundPrismaError } from 'src/shared/utils/prisma.util';
 
@@ -34,6 +35,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
     private readonly userRepository: UserRepository,
     private readonly refreshTokenRepository: RefreshTokenRepository,
+    private readonly sharedAuthService: SharedAuthService,
   ) {}
 
   async register(body: RegisterBodyType): Promise<RegisterResType> {
@@ -68,7 +70,7 @@ export class AuthService {
       },
     });
 
-    const { accessToken, refreshToken } = await this._createAuthSession(user.id);
+    const { accessToken, refreshToken } = await this.sharedAuthService.createAuthSession(user.id);
 
     return {
       accessToken,
@@ -92,7 +94,7 @@ export class AuthService {
       throw WrongPasswordException;
     }
 
-    const { accessToken, refreshToken } = await this._createAuthSession(user.id);
+    const { accessToken, refreshToken } = await this.sharedAuthService.createAuthSession(user.id);
 
     return {
       accessToken,
@@ -184,34 +186,5 @@ export class AuthService {
 
       throw error;
     }
-  }
-
-  private async _createAuthSession(userId: UserType['id']): Promise<{
-    accessToken: string;
-    refreshToken: string;
-  }> {
-    // Sign tokens
-    const $signAT = this.tokenService.signAccessToken({
-      userId,
-    });
-    const $signRT = this.tokenService.signRefreshToken({
-      userId,
-    });
-    const [accessToken, refreshToken] = await Promise.all([$signAT, $signRT]);
-
-    // Create Refresh token
-    const refreshTokenPayload = await this.tokenService.verifyRefreshToken(refreshToken);
-    await this.refreshTokenRepository.create({
-      data: {
-        token: refreshToken,
-        userId,
-        expiresAt: new Date(refreshTokenPayload.exp * 1000),
-      },
-    });
-
-    return {
-      accessToken,
-      refreshToken,
-    };
   }
 }
