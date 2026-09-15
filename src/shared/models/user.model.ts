@@ -19,6 +19,8 @@ export const ProjectedUserSchema = UserSchema.pick({
   username: true,
   bio: true,
   createdAt: true,
+}).extend({
+  isDiscordWebhookEnabled: z.boolean(),
 });
 
 export type UserType = z.infer<typeof UserSchema>;

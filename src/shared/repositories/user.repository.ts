@@ -10,30 +10,64 @@ export class UserRepository extends BaseRepository<Prisma.UserDelegate> {
     super(prisma.user);
   }
 
-  findUniqueProjectedUser(where: Prisma.UserWhereUniqueInput): Promise<ProjectedUserType | null> {
-    return this.model.findUnique({
+  async findUniqueProjectedUser(
+    where: Prisma.UserWhereUniqueInput,
+  ): Promise<ProjectedUserType | null> {
+    const user = await this.model.findUnique({
       where,
-      omit: {
-        pwd: true,
-        updatedAt: true,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        username: true,
+        bio: true,
+        createdAt: true,
+        discordWebhook: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
+
+    if (!user) {
+      return null;
+    }
+
+    return {
+      ...user,
+      isDiscordWebhookEnabled: Boolean(user?.discordWebhook?.id),
+    };
   }
 
-  updateWithProjectedUserReturn({
+  async updateWithProjectedUserReturn({
     where,
     data,
   }: {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUncheckedUpdateInput;
   }): Promise<ProjectedUserType> {
-    return this.model.update({
+    const user = await this.model.update({
       where,
       data,
-      omit: {
-        pwd: true,
-        updatedAt: true,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        username: true,
+        bio: true,
+        createdAt: true,
+        discordWebhook: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
+
+    return {
+      ...user,
+      isDiscordWebhookEnabled: Boolean(user?.discordWebhook?.id),
+    };
   }
 }

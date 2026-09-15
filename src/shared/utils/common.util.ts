@@ -17,3 +17,10 @@ export const generateRandomUsername = () => {
 
   return name;
 };
+
+export const stringToBase64 = (payload: string) => Buffer.from(payload).toString('base64');
+export const objectToBase64 = (payload: object) => stringToBase64(JSON.stringify(payload));
+
+export const base64ToObject = (payload: string): object => {
+  return JSON.parse(Buffer.from(payload, 'base64').toString()) as object;
+};

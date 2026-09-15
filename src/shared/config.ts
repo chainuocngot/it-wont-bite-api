@@ -16,6 +16,8 @@ if (!fs.existsSync(envFilePath)) {
 const envSchema = z.object({
   DATABASE_URL: z.url(),
   CLIENT_URL: z.url(),
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.coerce.number(),
   ACCESS_TOKEN_SECRET: z.string(),
   ACCESS_TOKEN_EXPIRES_IN: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
@@ -26,7 +28,7 @@ const envSchema = z.object({
   GOOGLE_REDIRECT_URI: z.string(),
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
-  DISCORD_EXCHANGE_REDIRECT_URI: z.string(),
+  DISCORD_CONNECT_REDIRECT_URI: z.string(),
   DISCORD_AUTHORIZE_REDIRECT_URI: z.string(),
   DISCORD_BOT_TOKEN: z.string(),
   DISCORD_BOT_PERMISSIONS_INTEGER: z.string(),

@@ -1,12 +1,5 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { type Response } from 'express';
-import { ZodSerializerDto } from 'nestjs-zod';
-import {
-  DiscordAuthorizeCallbackQueryDto,
-  GetDiscordAuthorizeUrlResDto,
-  GetGoogleAuthorizeUrlResDto,
-  GoogleAuthorizeCallbackQueryDto,
-} from 'src/routes/oauth/oauth.dto';
 import { OauthService } from 'src/routes/oauth/oauth.service';
 import envConfig from 'src/shared/config';
 import {
@@ -15,27 +8,46 @@ import {
   COOKIES_RT_KEY,
 } from 'src/shared/constants/auth.constant';
 import { IsPublic } from 'src/shared/decorators/auth.decorator';
+import { AccessTokenPayload, RefreshTokenPayload } from 'src/shared/types/token.type';
 
 @Controller('oauth')
 export class OauthController {
   constructor(private readonly oauthService: OauthService) {}
 
-  @Get('google')
+  @Get(':provider')
   @IsPublic()
-  @ZodSerializerDto(GetGoogleAuthorizeUrlResDto)
-  getGoogleAuthorizeUrl() {
-    return this.oauthService.getGoogleAuthorizeUrl();
+  getAuthorizeUrl(@Param('provider') provider: string) {
+    return this.oauthService.getAuthorizeUrl(provider);
   }
 
-  @Get('google/callback')
+  @Get(':provider/callback')
   @IsPublic()
-  async googleAuthorizeCallback(
+  async callback(
+    @Param('provider') provider: string,
+    @Query() query: unknown,
     @Res({ passthrough: true }) res: Response,
-    @Query() query: GoogleAuthorizeCallbackQueryDto,
   ) {
-    const { accessToken, refreshToken, accessTokenPayload, refreshTokenPayload } =
-      await this.oauthService.googleAuthorizeCallback(query);
+    const tokensInfo = await this.oauthService.authorizeCallback(provider, query);
 
+    this._setAuthCookies(res, tokensInfo);
+
+    return res.redirect(envConfig.CLIENT_URL);
+  }
+
+  private _setAuthCookies(
+    res: Response,
+    {
+      accessToken,
+      refreshToken,
+      accessTokenPayload,
+      refreshTokenPayload,
+    }: {
+      accessToken: string;
+      refreshToken: string;
+      accessTokenPayload: AccessTokenPayload;
+      refreshTokenPayload: RefreshTokenPayload;
+    },
+  ) {
     res.cookie(COOKIES_AT_KEY, accessToken, {
       httpOnly: true,
       secure: true,
@@ -63,54 +75,5 @@ export class OauthController {
         expires: new Date(accessTokenPayload.exp * 1000),
       },
     );
-
-    return res.redirect(envConfig.CLIENT_URL);
-  }
-
-  @Get('discord')
-  @IsPublic()
-  @ZodSerializerDto(GetDiscordAuthorizeUrlResDto)
-  getDiscordAuthorizeUrl() {
-    return this.oauthService.getDiscordAuthorizeUrl();
-  }
-
-  @Get('discord/callback')
-  @IsPublic()
-  async discordAuthorizeExchange(
-    @Res({ passthrough: true }) res: Response,
-    @Query() query: DiscordAuthorizeCallbackQueryDto,
-  ) {
-    const { accessToken, refreshToken, accessTokenPayload, refreshTokenPayload } =
-      await this.oauthService.discordAuthorizeCallback(query);
-
-    res.cookie(COOKIES_AT_KEY, accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      expires: new Date(accessTokenPayload.exp * 1000),
-    });
-    res.cookie(COOKIES_RT_KEY, refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      expires: new Date(refreshTokenPayload.exp * 1000),
-    });
-    res.cookie(
-      COOKIES_AT_INFO_KEY,
-      JSON.stringify({
-        exp: accessTokenPayload.exp,
-        lifeTime: accessTokenPayload.exp - accessTokenPayload.iat,
-      }),
-      {
-        secure: true,
-        sameSite: 'lax',
-        path: '/',
-        expires: new Date(accessTokenPayload.exp * 1000),
-      },
-    );
-
-    return res.redirect(envConfig.CLIENT_URL);
   }
 }
